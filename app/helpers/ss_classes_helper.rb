@@ -1,0 +1,2 @@
+module SsClassesHelper
+end

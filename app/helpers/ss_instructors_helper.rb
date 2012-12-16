@@ -1,0 +1,2 @@
+module SsInstructorsHelper
+end

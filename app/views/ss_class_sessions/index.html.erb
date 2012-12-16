@@ -1,0 +1,27 @@
+<h1>Listing ss_class_sessions</h1>
+
+<table>
+  <tr>
+    <th>Class</th>
+    <th>Date</th>
+    <th>Instructor</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @ss_class_sessions.each do |ss_class_session| %>
+  <tr>
+    <td><%= ss_class_session.class_id %></td>
+    <td><%= ss_class_session.date %></td>
+    <td><%= ss_class_session.instructor_id %></td>
+    <td><%= link_to 'Show', ss_class_session %></td>
+    <td><%= link_to 'Edit', edit_ss_class_session_path(ss_class_session) %></td>
+    <td><%= link_to 'Destroy', ss_class_session, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Ss class session', new_ss_class_session_path %>

@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Year:</b>
+  <%= @ss_class.year %>
+</p>
+
+<p>
+  <b>Quarter:</b>
+  <%= @ss_class.quarter %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @ss_class.name %>
+</p>
+
+<p>
+  <b>Book:</b>
+  <%= @ss_class.book_id %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @ss_class.type %>
+</p>
+
+
+<%= link_to 'Edit', edit_ss_class_path(@ss_class) %> |
+<%= link_to 'Back', ss_classes_path %>

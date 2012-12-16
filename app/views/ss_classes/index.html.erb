@@ -1,0 +1,31 @@
+<h1>Listing ss_classes</h1>
+
+<table>
+  <tr>
+    <th>Year</th>
+    <th>Quarter</th>
+    <th>Name</th>
+    <th>Book</th>
+    <th>Type</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @ss_classes.each do |ss_class| %>
+  <tr>
+    <td><%= ss_class.year %></td>
+    <td><%= ss_class.quarter %></td>
+    <td><%= ss_class.name %></td>
+    <td><%= ss_class.book_id %></td>
+    <td><%= ss_class.type %></td>
+    <td><%= link_to 'Show', ss_class %></td>
+    <td><%= link_to 'Edit', edit_ss_class_path(ss_class) %></td>
+    <td><%= link_to 'Destroy', ss_class, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Ss class', new_ss_class_path %>

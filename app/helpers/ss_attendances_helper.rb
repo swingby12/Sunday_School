@@ -1,0 +1,2 @@
+module SsAttendancesHelper
+end

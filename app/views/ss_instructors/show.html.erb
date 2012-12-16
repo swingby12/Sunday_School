@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @ss_instructor.user_id %>
+</p>
+
+<p>
+  <b>Class:</b>
+  <%= @ss_instructor.class_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_ss_instructor_path(@ss_instructor) %> |
+<%= link_to 'Back', ss_instructors_path %>
