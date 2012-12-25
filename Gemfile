@@ -21,6 +21,9 @@ group :assets do
 
   # UI from Twitter Bootstrap
   gem 'bootstrap-sass', '~> 2.2.2.0'
+
+  # Secure password
+  gem 'bcrypt-ruby', '3.0.1'
 end
 
 gem 'jquery-rails'

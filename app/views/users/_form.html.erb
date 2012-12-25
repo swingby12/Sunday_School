@@ -1,6 +1,6 @@
-<%= form_for(@user) do |f| %>
+<%= form_for(@user, :html => {:class => "form-horizontal"}) do |f| %>
   <% if @user.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-error">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
 
       <ul>
@@ -11,23 +11,61 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name_first %><br />
-    <%= f.text_field :name_first %>
-  </div>
-  <div class="field">
-    <%= f.label :name_last %><br />
-    <%= f.text_field :name_last %>
-  </div>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </div>
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.text_field :password %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+    <div class="control-group">
+      <%= f.label :name_first,
+                  "First Name",
+                  :class => "control-label"
+      %>
+      <div class="controls">
+        <%= f.text_field :name_first,
+                         :placeholder => "Enter First Name" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :name_last,
+                  "Last Name",
+                  :class => "control-label"
+      %>
+      <div class="controls">
+        <%= f.text_field :name_last,
+                         :placeholder => "Enter Last Name" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :email,
+                  "Email (Login ID)",
+                  :class => "control-label"
+      %>
+      <div class="controls">
+        <%= f.email_field :email,
+                          :placeholder => "Enter Email Address" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :password,
+                  "Password",
+                  :class => "control-label"
+      %>
+      <div class="controls">
+        <%= f.password_field :password %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :password_confirmation,
+                  "Confirm Password",
+                  :class => "control-label"
+      %>
+      <div class="controls">
+        <%= f.password_field :password_confirmation %>
+      </div>
+    </div>
+
+  <div class="form-actions">
+    <%= f.submit :class => "btn btn-primary" %>
+    <%= link_to 'Back', users_path, :class => "btn" %>
   </div>
 <% end %>
