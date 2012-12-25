@@ -1,0 +1,4 @@
+if (!document.getElementById("new-session-form"))
+{
+    $("#table-header").after("<%= escape_javascript(render(:partial => "class_row")) %>").slideDown();
+}

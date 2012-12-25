@@ -4,14 +4,12 @@
 <p>
   <b>Book:</b>
   <%= @ss_class.book_id %> <br>
-  <b>Instructors: </b>
-  <% @ss_class.instructors.each do |instructor| %>
-    <%= instructor.name %>
-  <% end %>
+  <strong>Instructors: </strong>
+  <%= instructor_list(@ss_class.instructors) %>
 </p>
 
 <table class="table table-bordered table-striped table-hover">
-  <tr>
+  <tr id="table-header">
     <th>Date</th>
     <th>Instructor</th>
     <th></th>
@@ -38,7 +36,8 @@
   <%= link_to 'Back',
               ss_classes_path,
               :class => "btn" %>
-  Create New Session | Add New Instructors
+  Create New Session
+  <%= link_to 'Create New Session', {:action => 'new_session', :controller => 'ss_classes'}, :remote => true %>
   <!-- Button to trigger modal -->
   <a href="#edit_instructors" role="button" class="btn" data-toggle="modal">Edit Instructors</a>
 </div>

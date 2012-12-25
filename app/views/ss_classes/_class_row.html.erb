@@ -1,0 +1,14 @@
+<tr id="new-session-form" class="">
+  <% @ss_class = SsClass.find(params[:id]) %>
+  <%= form_for(SsClassSession.new, :remote => true) do |f| %>
+  <%= f.hidden_field :class_id, :value => @ss_class.id %>
+  <td class="span3"><%= f.text_field :date %></td>
+  <td class="span3"><%= f.select  :instructor_id,
+                    @ss_class.instructors.collect { |u| [u.name, u.id] }%>
+  </td>
+  <td><%= f.submit "+", :class => "btn btn-primary" %></td>
+
+  <td>Header</td>
+  <td>Header</td>
+  <% end %>
+</tr>

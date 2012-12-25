@@ -1,4 +1,6 @@
 class SsClassesController < ApplicationController
+
+
   # GET /ss_classes
   # GET /ss_classes.json
   def index
@@ -83,5 +85,13 @@ class SsClassesController < ApplicationController
       format.html { redirect_to ss_classes_url }
       format.json { head :no_content }
     end
+  end
+end
+
+# Create new class session within the table
+def new_session
+  @ss_class = SsClass.find(params[:id])
+  respond_to do |format|
+    format.js { render :layout=>false }
   end
 end
