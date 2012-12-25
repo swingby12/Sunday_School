@@ -8,4 +8,7 @@ class SsInstructor < ActiveRecord::Base
 
   validates :class_id,
             :presence => true
+
+  validates_uniqueness_of :class_id,
+                          :scope => [:user_id]
 end

@@ -39,4 +39,57 @@
               ss_classes_path,
               :class => "btn" %>
   Create New Session | Add New Instructors
+  <!-- Button to trigger modal -->
+  <a href="#edit_instructors" role="button" class="btn" data-toggle="modal">Edit Instructors</a>
+</div>
+
+
+<!-- Modal -->
+<div id="edit_instructors" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Instructors for <%= @ss_class.name %> <small><%= "#{@ss_class.year} - Q#{@ss_class.quarter}" %></small></h3>
+  </div>
+
+  <div class="modal-body form-horizontal">
+    <h4>Add New Instructor</h4>
+    <%= form_for(@ss_instructor, :html => {:style => "margin: 0px;"}) do |f| %>
+    <div class="control-group">
+      <%= f.label :user_id,
+                  "Name",
+                  :class => "control-label"
+      %>
+      <div class="controls">
+        <div class="input-append">
+          <%= f.hidden_field :class_id, :value => @ss_class.id %>
+          <%= f.select    :user_id,
+                          @users.collect { |u| [u.name, u.id] }%>
+          <%= f.submit "+", :class => "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+    <% end %>
+    <hr>
+    <h4>Remove Instructor</h4>
+    <div class="form-horizontal">
+        <% @ss_class.ss_instructors.each do |class_instructor| %>
+          <div class="control-group">
+            <label class="control-label"><%= class_instructor.user.name %></label>
+            <div class="controls">
+              <%= link_to 'Remove', class_instructor ,
+                          :confirm => 'Are you sure?',
+                          :method => :delete,
+                          :class => "btn btn-danger" %>
+            </div>
+          </div>
+        <% end %>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+
+  </div>
+
+
 </div>

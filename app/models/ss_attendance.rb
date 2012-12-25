@@ -8,4 +8,7 @@ class SsAttendance < ActiveRecord::Base
 
   validates :session_id,
             :presence => true
+
+  validates_uniqueness_of :session_id,
+                          :scope => [:user_id]
 end

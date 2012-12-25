@@ -16,6 +16,9 @@ class SsClassesController < ApplicationController
     @ss_class = SsClass.find(params[:id])
     @ss_sessions = @ss_class.ss_class_sessions
 
+    @ss_instructor = SsInstructor.new
+    @users = User.all
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @ss_class }
