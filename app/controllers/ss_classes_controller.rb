@@ -14,6 +14,7 @@ class SsClassesController < ApplicationController
   # GET /ss_classes/1.json
   def show
     @ss_class = SsClass.find(params[:id])
+    @ss_sessions = @ss_class.ss_class_sessions
 
     respond_to do |format|
       format.html # show.html.erb

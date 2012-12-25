@@ -1,30 +1,42 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Year:</b>
-  <%= @ss_class.year %>
-</p>
-
-<p>
-  <b>Quarter:</b>
-  <%= @ss_class.quarter %>
-</p>
-
-<p>
-  <b>Name:</b>
-  <%= @ss_class.name %>
-</p>
-
+<h2><%= @ss_class.name %> <small><%= "#{@ss_class.year} - Q#{@ss_class.quarter}" %></small></h2>
 <p>
   <b>Book:</b>
-  <%= @ss_class.book_id %>
+  <%= @ss_class.book_id %> <br>
+  <b>Instructors: </b>
+  <% @ss_class.instructors.each do |instructor| %>
+    <%= instructor.name %>
+  <% end %>
 </p>
 
-<p>
-  <b>Category:</b>
-  <%= @ss_class.category %>
-</p>
+<table class="table table-bordered table-striped table-hover">
+  <tr>
+    <th>Date</th>
+    <th>Instructor</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @ss_sessions.each do |ss_class_session| %>
+      <tr>
+        <td><%= ss_class_session.date %></td>
+        <td><%= ss_class_session.instructor.name_first %></td>
+        <td><%= link_to 'Show', ss_class_session %></td>
+        <td><%= link_to 'Edit', edit_ss_class_session_path(ss_class_session) %></td>
+        <td><%= link_to 'Destroy', ss_class_session, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+  <% end %>
+</table>
 
 
-<%= link_to 'Edit', edit_ss_class_path(@ss_class) %> |
-<%= link_to 'Back', ss_classes_path %>
+<div class="form-actions">
+  <%= link_to 'Edit',
+              edit_ss_class_path(@ss_class),
+              :class => "btn btn-primary" %>
+  <%= link_to 'Back',
+              ss_classes_path,
+              :class => "btn" %>
+  Create New Session | Add New Instructors
+</div>
