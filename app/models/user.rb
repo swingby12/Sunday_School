@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
   has_secure_password
 
   before_save { |user| user.email = email.downcase }
+  before_save :create_remember_token
 
   has_many :accesses, foreign_key:"user_id", dependent: :destroy
   has_many :ss_classes, through: :ss_instructors, source: :ss_class
@@ -32,4 +33,11 @@ class User < ActiveRecord::Base
 
   validates :password_confirmation,
             :presence => true
+
+  private
+
+  def create_remember_token
+    self.remember_token = SecureRandom.urlsafe_base64
+  end
+
 end
