@@ -1,9 +1,13 @@
 class SsClass < ActiveRecord::Base
-  attr_accessible :quarter, :year, :type, :instructors, :name, :book_id
+  attr_accessible :quarter, :year, :category, :name, :book_id
 
   belongs_to :bible
-  has_many :ss_class_sessions, foreign_key :"class_id", dependent :destroy
-  has_many :instructors, through :ss_instructor, source :user
+  has_many :ss_class_sessions,
+           :foreign_key => "class_id",
+           :dependent => :destroy
+  has_many :instructors,
+           :through => :ss_instructors,
+           :source => :user
 
   validates :quarter,
             :presence => true,
@@ -15,10 +19,7 @@ class SsClass < ActiveRecord::Base
   validates :year,
             :presence => true
 
-  validates :type,
-            :presence => true
-
-  validates :instructors,
+  validates :category,
             :presence => true
 
   validates :name,

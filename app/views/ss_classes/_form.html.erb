@@ -1,6 +1,6 @@
-<%= form_for(@ss_class) do |f| %>
-  <% if @ss_class.errors.any? %>
-    <div id="error_explanation">
+<%= form_for(@ss_class, :html => {:class => "form-horizontal"}) do |f| %>
+    <% if @ss_class.errors.any? %>
+    <div id="error_explanation" class="alert alert-error">
       <h2><%= pluralize(@ss_class.errors.count, "error") %> prohibited this ss_class from being saved:</h2>
 
       <ul>
@@ -9,29 +9,68 @@
       <% end %>
       </ul>
     </div>
-  <% end %>
+    <% end %>
 
-  <div class="field">
-    <%= f.label :year %><br />
-    <%= f.date_select :year %>
-  </div>
-  <div class="field">
-    <%= f.label :quarter %><br />
-    <%= f.number_field :quarter %>
-  </div>
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :book_id %><br />
-    <%= f.number_field :book_id %>
-  </div>
-  <div class="field">
-    <%= f.label :type %><br />
-    <%= f.text_field :type %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    <div class="control-group">
+      <%= f.label :name,
+                  "Class Name",
+                  :class => "control-label"
+      %>
+      <div class="controls">
+        <%= f.text_field :name,
+                         :placeholder => "Enter Name" %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :year,
+                  "Year",
+                  :class => "control-label"
+      %>
+      <div class="controls">
+        <%= f.select    :year,
+                        ( (Time.now.year-5)..(Time.now.year+3) ).map{ |y| [y,y] },
+                        {:selected => Time.now.year}
+                         %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :quarter,
+                  "Quarter",
+                  :class => "control-label"
+      %>
+      <div class="controls">
+        <%= f.select    :quarter,
+                        ( 1..4 ).map{ |y| ["Q#{y}",y] }
+        %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :book_id,
+                  "Book",
+                  :class => "control-label"
+      %>
+      <div class="controls">
+        <%= f.select    :book_id,
+                        Bible.all.collect { |b| [b.name, b.id]}
+        %>
+      </div>
+    </div>
+
+    <div class="control-group">
+      <%= f.label :category,
+                  "Class Type",
+                  :class => "control-label"
+      %>
+      <div class="controls">
+        <%= f.number_field :category %>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <%= f.submit "Create Class", :class => "btn btn-primary" %>
+      <%= link_to 'Back', ss_classes_path, :class => "btn" %>
+    </div>
 <% end %>
