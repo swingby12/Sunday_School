@@ -68,7 +68,19 @@
         <%= f.number_field :category %>
       </div>
     </div>
+    <div class="control-group">
+      <%= f.label :instructor_tokens,
+                  "Instructors",
+                  :class => "control-label"
+      %>
 
+        <%= f.text_field :instructor_tokens,
+                         "data-pre" => @ss_class.instructors.map{|u| {
+                                 :name => [u.name_first, u.name_last].join(' '),
+                                 :id => u.id}
+                         }.to_json %>
+
+    </div>
     <div class="form-actions">
       <%= f.submit "Create Class", :class => "btn btn-primary" %>
       <%= link_to 'Back', ss_classes_path, :class => "btn" %>

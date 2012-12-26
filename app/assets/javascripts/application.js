@@ -21,3 +21,11 @@ function flash_display(type, str)
     var str = "<div class='alert alert-"+type+"'><button type='button' class='close' data-dismiss='alert'>&times;</button>"+str+"</div>";
     $("#flash").html( str );
 }
+
+$(function () {
+    $('#ss_class_instructor_tokens').tokenInput('/users.json', {
+        crossDomain: false,
+        prePopulate: $('#ss_class_instructor_tokens').data('pre'),
+        theme: 'facebook'
+    });
+});

@@ -2,11 +2,14 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    @users = User.all
+    @users = User.where("name_first like ? OR name_last like ?", "%#{params[:q]}%", "%#{params[:q]}%")
 
+    results = @users.map(&:attributes)
+    results = @users.map{|u| {:name => [u.name_first, u.name_last].join(' '), :id => u.id}}
+    #results = results.map(&:attributes)
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @users }
+      format.json { render :json => results  }
     end
   end
 

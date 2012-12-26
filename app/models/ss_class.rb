@@ -1,5 +1,5 @@
 class SsClass < ActiveRecord::Base
-  attr_accessible :quarter, :year, :category, :name, :book_id
+  attr_accessible :quarter, :year, :category, :name, :book_id, :instructor_tokens
 
   belongs_to :bible
   has_many :ss_class_sessions,
@@ -10,6 +10,10 @@ class SsClass < ActiveRecord::Base
   has_many :instructors,
            :through => :ss_instructors,
            :source => :user
+  attr_reader :instructor_tokens
+  def instructor_tokens=(ids)
+    self.instructor_ids = ids.split(",")
+  end
 
   validates :quarter,
             :presence => true,
