@@ -1,12 +1,41 @@
-<p id="notice"><%= notice %></p>
-
-<h2><%= @ss_class.name %> <small><%= "#{@ss_class.year} - Q#{@ss_class.quarter}" %></small></h2>
+<h2><%= best_in_place @ss_class,
+                      :name %> <small><%= best_in_place @ss_class,
+                                                           :year
+                                      %> - <%= best_in_place @ss_class,
+                                                        :quarter,
+                                                        :type => :select,
+                                                        :collection => [[1,'Q1'],[2,'Q2'],[3,'Q3'],[4,'Q4']]
+                                      %></small></h2>
 <p>
   <b>Book:</b>
-  <%= @ss_class.book_id %> <br>
+  <%= best_in_place @ss_class,
+                    :book_id,
+                    :type => :select,
+                    :collection => Bible.all.collect {|b| [b.id, b.name]}%> <br>
   <strong>Instructors: </strong>
-  <%= instructor_list(@ss_class.instructors) %>
+  <%#= instructor_list(@ss_class.instructors) %>
 </p>
+<div class="span8">
+  <%= form_for(@ss_class, :html => {:class => "form-inline"}) do |f| %>
+      <div class="input-append">
+        <div class="pull-left">
+          <%= f.text_field :instructor_tokens,
+                           "data-pre" => @ss_class.instructors.map{|u| {
+                                   :name => [u.name_first, u.name_last].join(' '),
+                                   :id => u.id}
+                           }.to_json
+          %>
+        </div>
+
+      <%= f.submit "Update", :class => "btn btn-primary" %>
+      </div>
+  <% end %>
+
+</div>
+
+
+
+
 
 <table class="table table-bordered table-striped table-hover">
   <tr id="table-header">
