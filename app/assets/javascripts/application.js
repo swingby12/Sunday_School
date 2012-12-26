@@ -12,5 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require best_in_place
 //= require bootstrap
 //= require_tree .
+
+function flash_display(type, str)
+{
+    var str = "<div class='alert alert-"+type+"'><button type='button' class='close' data-dismiss='alert'>&times;</button>"+str+"</div>";
+    $("#flash").html( str );
+}

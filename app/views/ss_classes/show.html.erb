@@ -12,19 +12,13 @@
   <tr id="table-header">
     <th>Date</th>
     <th>Instructor</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Random Materials</th>
+    <th>Actions</th>
   </tr>
 
   <% @ss_sessions.each do |ss_class_session| %>
-      <tr>
-        <td><%= ss_class_session.date %></td>
-        <td><%= ss_class_session.instructor.name_first %></td>
-        <td><%= link_to 'Show', ss_class_session %></td>
-        <td><%= link_to 'Edit', edit_ss_class_session_path(ss_class_session) %></td>
-        <td><%= link_to 'Destroy', ss_class_session, confirm: 'Are you sure?', method: :delete %></td>
-      </tr>
+      <% @ss_class_session = ss_class_session %>
+      <%= render :partial => 'display_row' %>
   <% end %>
 </table>
 
@@ -36,8 +30,14 @@
   <%= link_to 'Back',
               ss_classes_path,
               :class => "btn" %>
-  Create New Session
-  <%= link_to 'Create New Session', {:action => 'new_session', :controller => 'ss_classes'}, :remote => true %>
+  <%= link_to 'Create New Session',
+              {
+                      :action => 'new_session',
+                      :controller => 'ss_classes'
+              },
+              :remote => true,
+              :class => "btn"
+  %>
   <!-- Button to trigger modal -->
   <a href="#edit_instructors" role="button" class="btn" data-toggle="modal">Edit Instructors</a>
 </div>

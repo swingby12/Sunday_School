@@ -16,7 +16,8 @@ class SsClassesController < ApplicationController
   # GET /ss_classes/1.json
   def show
     @ss_class = SsClass.find(params[:id])
-    @ss_sessions = @ss_class.ss_class_sessions
+    @ss_sessions = @ss_class.ss_class_sessions.order('date ASC')
+    @instructors = @ss_class.instructors
 
     @ss_instructor = SsInstructor.new
     @users = User.all

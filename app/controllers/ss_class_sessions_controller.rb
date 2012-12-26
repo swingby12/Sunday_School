@@ -34,22 +34,18 @@ class SsClassSessionsController < ApplicationController
 
   # GET /ss_class_sessions/1/edit
   def edit
-    @ss_class_session = SsClassSession.find(params[:id])
   end
 
   # POST /ss_class_sessions
   # POST /ss_class_sessions.json
   def create
     @ss_class_session = SsClassSession.new(params[:ss_class_session])
+    @instructors = SsClass.find(@ss_class_session.class_id).instructors
+
+    @success = @ss_class_session.save
 
     respond_to do |format|
-      if @ss_class_session.save
-        format.html { redirect_to @ss_class_session, notice: 'Ss class session was successfully created.' }
-        format.json { render json: @ss_class_session, status: :created, location: @ss_class_session }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @ss_class_session.errors, status: :unprocessable_entity }
-      end
+      format.js
     end
   end
 

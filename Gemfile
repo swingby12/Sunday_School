@@ -24,6 +24,9 @@ group :assets do
 
   # Secure password
   gem 'bcrypt-ruby', '3.0.1'
+
+  # In place edit
+  gem 'best_in_place'
 end
 
 gem 'jquery-rails'

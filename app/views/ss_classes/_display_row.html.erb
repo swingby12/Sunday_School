@@ -1,0 +1,15 @@
+<tr id="session_row_<%= @ss_class_session.id %>">
+  <td><%= best_in_place @ss_class_session, :date, :type => :date %></td>
+  <td><%= best_in_place @ss_class_session,
+                        :instructor_id,
+                        :type => :select,
+                        :collection => @instructors.collect { |u| [u.id, u.name] }
+  %></td>
+  <td></td>
+  <td><%= link_to 'Destroy',
+                  @ss_class_session,
+                  confirm: 'Are you sure?',
+                  method: :delete,
+                  :class => "btn btn-danger"
+  %></td>
+</tr>

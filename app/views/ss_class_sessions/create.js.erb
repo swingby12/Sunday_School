@@ -1,0 +1,8 @@
+<% if @success %>
+    $('#new-session-form').after("<%= escape_javascript(render :partial => 'ss_classes/display_row') %>");
+    $("#new-session-form").remove();
+    flash_display('success', 'New class session on <%= @ss_class_session.date %> is added')
+<% else if @ss_class_session.errors.any? %>
+    flash_display('error', "<%= @ss_class_session.errors.full_messages.first %>")
+<% end %>
+<% end %>
