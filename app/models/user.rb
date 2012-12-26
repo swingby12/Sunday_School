@@ -11,7 +11,10 @@ class User < ActiveRecord::Base
            :through => :ss_instructors,
            :source => :ss_class
   #has_many :ss_classes, through: :ss_class_sessions, source: :ss_class
-  has_many :sessions, through: :ss_attendances, source: :ss_class_session
+  has_many :ss_attendances
+  has_many :sessions,
+           :through => :ss_attendances,
+           :source => :ss_class_session
   has_many :ss_class_sessions, primary_key: "instructor_id", dependent: :destroy
 
   # Validations

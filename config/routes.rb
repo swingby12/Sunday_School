@@ -2,10 +2,6 @@ SundaySchool::Application.routes.draw do
 
   resources :bibles
 
-  resources :ss_attendances
-
-  resources :ss_instructors
-
   resources :ss_class_sessions
 
   resources :ss_classes
