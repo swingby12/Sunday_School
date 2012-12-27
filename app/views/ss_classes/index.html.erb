@@ -1,31 +1,39 @@
-<h2>List of All Classes</h2>
+<div class="row">
+  <div class="span3 well">
+    This will be the search box
+    <br>
+    not sure what to put ehre yet :/
 
-<table class="table table-bordered table-striped table-hover">
-  <tr>
-    <th>Year</th>
-    <th>Quarter</th>
-    <th>Name</th>
-    <th>Book</th>
-    <th>Type</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+  </div>
+  <div class="span8">
 
-<% @ss_classes.each do |ss_class| %>
-  <tr>
-    <td><%= ss_class.year %></td>
-    <td><%= "Q#{ss_class.quarter}" %></td>
-    <td><%= ss_class.name %></td>
-    <td><%= ss_class.book_id %></td>
-    <td><%= ss_class.category %></td>
-    <td><%= link_to 'Show', ss_class %></td>
-    <td><%= link_to 'Edit', edit_ss_class_path(ss_class) %></td>
-    <td><%= link_to 'Destroy', ss_class, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
-</table>
+    <h3>This is the search result i guess...</h3>
 
-<br />
+    <table class="table table-bordered table-striped table-hover">
+      <tr>
+        <th>Name</th>
+        <th>Year</th>
+        <th>Quarter</th>
+        <th>Book</th>
+        <th></th>
+      </tr>
 
-<%= link_to 'Add new class', new_ss_class_path, :class => "btn btn-primary" %>
+      <% @ss_classes.each do |ss_class| %>
+          <tr>
+            <td><%= link_to ss_class.name, ss_class %></td>
+            <td><%= ss_class.year %></td>
+            <td><%= "Q#{ss_class.quarter}" %></td>
+
+            <td><%= ss_class.bible.name %></td>
+            <td><%= link_to 'Edit', edit_ss_class_path(ss_class) %> | <%=
+                link_to 'Destroy', ss_class, confirm: 'Are you sure?', method: :delete %></td>
+          </tr>
+      <% end %>
+    </table>
+
+    <br />
+
+    <%= link_to 'Add new class', new_ss_class_path, :class => "btn btn-primary" %>
+
+  </div>
+</div>

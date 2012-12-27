@@ -9,7 +9,7 @@
 <p>
   <b>Book:</b>
   <%= best_in_place @ss_class,
-                    :book_id,
+                    :bible_id,
                     :type => :select,
                     :collection => Bible.all.collect {|b| [b.id, b.name]}%> <br>
   <strong>Instructors: </strong>

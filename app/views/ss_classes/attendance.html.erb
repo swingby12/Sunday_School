@@ -5,7 +5,9 @@
       <tr id="table-header">
         <th>Name</th>
         <% @ss_sessions.each do |ss_class_session| %>
-            <th><%= ss_class_session.date %></th>
+            <th><%= ss_class_session.date %> <%= link_to icon_html('edit'),
+                                                 ss_class_session_path(ss_class_session)
+            %></th>
         <% end %>
       </tr>
   </thead>

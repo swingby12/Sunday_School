@@ -4,7 +4,7 @@ class SsClassesController < ApplicationController
   # GET /ss_classes
   # GET /ss_classes.json
   def index
-    @ss_classes = SsClass.all
+    @ss_classes = SsClass.joins(:bible).all
 
     respond_to do |format|
       format.html # index.html.erb

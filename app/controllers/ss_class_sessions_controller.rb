@@ -72,10 +72,13 @@ class SsClassSessionsController < ApplicationController
   # DELETE /ss_class_sessions/1.json
   def destroy
     @ss_class_session = SsClassSession.find(params[:id])
+    ss_class_id = @ss_class_session.class_id
+    ss_session_date = @ss_class_session.date
     @ss_class_session.destroy
 
     respond_to do |format|
-      format.html { redirect_to ss_class_sessions_url }
+      flash[:error] = "Class on #{ss_session_date} is removed"
+      format.html { redirect_to ss_class_path(ss_class_id) }
       format.json { head :no_content }
     end
   end

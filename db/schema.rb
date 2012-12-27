@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121227003907) do
+ActiveRecord::Schema.define(:version => 20121227054038) do
 
   create_table "accesses", :force => true do |t|
     t.integer  "type"
@@ -46,11 +46,11 @@ ActiveRecord::Schema.define(:version => 20121227003907) do
   create_table "ss_classes", :force => true do |t|
     t.integer  "quarter"
     t.string   "name"
-    t.integer  "book_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.integer  "year"
     t.integer  "category"
+    t.integer  "bible_id"
   end
 
   create_table "ss_instructors", :force => true do |t|
