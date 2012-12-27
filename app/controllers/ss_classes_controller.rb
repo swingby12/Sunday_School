@@ -4,7 +4,12 @@ class SsClassesController < ApplicationController
   # GET /ss_classes
   # GET /ss_classes.json
   def index
-    @ss_classes = SsClass.joins(:bible).all
+    @ss_classes = SsClass.by_year(params[:year]).by_bible_id(params[:book]).by_name(params[:name]).joins(:bible)
+
+    empty_book = Bible.new
+    empty_book.id = nil
+    empty_book.name = "Any"
+    @books = Bible.all.unshift(empty_book)
 
     respond_to do |format|
       format.html # index.html.erb

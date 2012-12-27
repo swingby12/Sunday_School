@@ -34,4 +34,19 @@ class SsClass < ActiveRecord::Base
   validates :bible_id,
             :presence => true
 
+
+  def self.by_year(year)
+    return scoped unless year.present?
+    where(:year => year)
+  end
+
+  def self.by_bible_id(bible_id)
+    return scoped unless bible_id.present?
+    where(:bible_id => bible_id)
+  end
+
+  def self.by_name(name)
+    return scoped unless name.present?
+    where("\"ss_classes\".\"name\" like (?)", "%#{name}%")
+  end
 end

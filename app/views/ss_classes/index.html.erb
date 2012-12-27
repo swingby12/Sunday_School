@@ -1,9 +1,28 @@
 <div class="row">
   <div class="span3 well">
-    This will be the search box
-    <br>
-    not sure what to put ehre yet :/
+    <%= form_tag ss_classes_path,
+                 :method =>'get',
+                 :class => "" do %>
+        <fieldset>
+          <legend>Search</legend>
+          <label>Year</label>
+          <%= text_field_tag :year,
+                             params[:year],
+                             :placeholder => Time.now.year
+                             %>
 
+          <label>Book</label>
+          <%= select_tag :book,
+                         options_from_collection_for_select(@books, "id", "name", params[:book])
+          %>
+          <label>Name</label>
+          <%= text_field_tag :name,
+                             params[:name],
+                             :placeholder => "Enter keywords"
+          %>
+          <button type="submit" class="btn btn-primary"><%= icon_html(:search, true) %>Search</button>
+        </fieldset>
+    <% end %>
   </div>
   <div class="span8">
 
