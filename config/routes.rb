@@ -17,6 +17,7 @@ SundaySchool::Application.routes.draw do
   match '/signout', to: 'sessions#destroy', via: :delete
 
   match 'ss_classes/new_session/:id' => 'ss_classes#new_session'
+  match 'ss_classes/:id/attendance' => 'ss_classes#attendance'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

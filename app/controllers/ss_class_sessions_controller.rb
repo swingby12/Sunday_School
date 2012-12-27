@@ -14,6 +14,8 @@ class SsClassSessionsController < ApplicationController
   # GET /ss_class_sessions/1.json
   def show
     @ss_class_session = SsClassSession.find(params[:id])
+    @ss_class = SsClass.find(@ss_class_session.class_id  )
+    @instructors = @ss_class.instructors
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,6 +36,7 @@ class SsClassSessionsController < ApplicationController
 
   # GET /ss_class_sessions/1/edit
   def edit
+    @ss_class_session = SsClassSession.find(params[:id])
   end
 
   # POST /ss_class_sessions

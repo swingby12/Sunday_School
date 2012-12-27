@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121225063603) do
+ActiveRecord::Schema.define(:version => 20121227003907) do
 
   create_table "accesses", :force => true do |t|
     t.integer  "type"
@@ -30,9 +30,9 @@ ActiveRecord::Schema.define(:version => 20121225063603) do
 
   create_table "ss_attendances", :force => true do |t|
     t.integer  "user_id"
-    t.integer  "session_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.integer  "ss_class_session_id"
   end
 
   create_table "ss_class_sessions", :force => true do |t|

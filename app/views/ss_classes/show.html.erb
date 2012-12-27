@@ -53,18 +53,22 @@
 
 
 <div class="form-actions">
-  <%= link_to 'Edit',
-              edit_ss_class_path(@ss_class),
-              :class => "btn btn-primary" %>
-  <%= link_to 'Back',
-              ss_classes_path,
-              :class => "btn" %>
-  <%= link_to 'Create New Session',
+    <%= link_to 'Create New Session',
+                {
+                        :action => 'new_session',
+                        :controller => 'ss_classes'
+                },
+                :remote => true,
+                :class => "btn btn-primary"
+    %>
+    <%= link_to 'View Attendance',
               {
-                      :action => 'new_session',
+                      :action => 'attendance',
                       :controller => 'ss_classes'
               },
-              :remote => true,
-              :class => "btn"
-  %>
+              :class => "btn btn-info"
+    %>
+    <%= link_to 'Back',
+                ss_classes_path,
+                :class => "btn" %>
 </div>

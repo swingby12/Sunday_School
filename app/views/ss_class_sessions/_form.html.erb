@@ -23,6 +23,20 @@
     <%= f.label :instructor_id %><br />
     <%= f.number_field :instructor_id %>
   </div>
+    <div class="control-group">
+      <%= f.label :attendance_tokens,
+                  "Instructors",
+                  :class => "control-label"
+      %>
+
+      <%= f.text_field :attendance_tokens,
+                       "data-pre" => @ss_class_session.users.map{|u| {
+                            :name => [u.name_first, u.name_last].join(' '),
+                            :id => u.id}
+                       }.to_json %>
+
+
+    </div>
   <div class="actions">
     <%= f.submit %>
   </div>

@@ -6,10 +6,14 @@
                         :collection => @instructors.collect { |u| [u.id, u.name] }
   %></td>
   <td></td>
-  <td><%= link_to 'Destroy',
-                  @ss_class_session,
-                  confirm: 'Are you sure?',
-                  method: :delete,
-                  :class => "btn btn-danger"
-  %></td>
+  <td>
+    <%= link_to raw("#{icon_html('edit')} Edit/Attendance"),
+                ss_class_session_path(@ss_class_session)
+    %> | <%= link_to raw("#{icon_html('remove')} Remove"),
+                @ss_class_session,
+                confirm: 'Are you sure?',
+                method: :delete
+    %>
+  </td>
+
 </tr>

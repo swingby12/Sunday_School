@@ -29,3 +29,11 @@ $(function () {
         theme: 'facebook'
     });
 });
+
+$(function () {
+    $('#ss_class_session_attendance_tokens').tokenInput('/users.json', {
+        crossDomain: false,
+        prePopulate: $('#ss_class_session_attendance_tokens').data('pre'),
+        theme: 'facebook'
+    });
+});

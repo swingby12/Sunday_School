@@ -1,0 +1,37 @@
+<h2><%= @ss_class.name %> <small><%= @ss_class.year%> - Q<%= @ss_class.quarter %></small></h2>
+<table class="table table-bordered">
+  <caption>Attendance records</caption>
+  <thead>
+      <tr id="table-header">
+        <th>Name</th>
+        <% @ss_sessions.each do |ss_class_session| %>
+            <th><%= ss_class_session.date %></th>
+        <% end %>
+      </tr>
+  </thead>
+  <tbody>
+      <% @students.each do |student| %>
+          <tr>
+            <td><%= student.name %></td>
+            <% @ss_sessions.each do |ss_class_session| %>
+                <%= (@arr_data[ss_class_session.id] and
+                        @arr_data[ss_class_session.id][student.id]) ? raw("<td class='success'>X</td>") : raw("<td></td>")
+                %>
+            <% end %>
+          </tr>
+      <% end %>
+    <tr class="info">
+      <th>Total</th>
+      <% @ss_sessions.each do |ss_class_session| %>
+          <td><%= ss_class_session.users.count %></td>
+      <% end %>
+    </tr>
+  </tbody>
+</table>
+
+<div class="form-actions">
+  <%= link_to "Back",
+              ss_class_path(@ss_class),
+              :class => "btn"
+  %>
+</div>

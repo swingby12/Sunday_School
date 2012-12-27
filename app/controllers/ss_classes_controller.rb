@@ -87,12 +87,38 @@ class SsClassesController < ApplicationController
       format.json { head :no_content }
     end
   end
-end
 
-# Create new class session within the table
-def new_session
-  @ss_class = SsClass.find(params[:id])
-  respond_to do |format|
-    format.js { render :layout=>false }
+  # Create new class session within the table
+  def new_session
+    @ss_class = SsClass.find(params[:id])
+    respond_to do |format|
+      format.js { render :layout=>false }
+    end
+  end
+  # GET /ss_classes/1/attendance
+  # GET /ss_classes/1.json
+  def attendance
+    @ss_class = SsClass.find(params[:id])
+    @ss_sessions = @ss_class.ss_class_sessions.order('date ASC')
+
+    @arr_data = Hash.new(false)
+    @students = []
+    @ss_sessions.each do |session|
+      users = session.users
+      users.each do |u|
+        unless @arr_data[session.id]
+          @arr_data[session.id] = Hash.new(false)
+        end
+        @arr_data[session.id][u.id] = true
+      end
+      @students |= users
+    end
+
+    @users = User.all
+
+    respond_to do |format|
+      format.html { render action: "attendance" }
+    end
   end
 end
+

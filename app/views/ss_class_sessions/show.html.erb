@@ -1,20 +1,35 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <b>Class:</b>
-  <%= @ss_class_session.class_id %>
-</p>
+<%= form_for(@ss_class_session) do |f| %>
+    <fieldset>
+      <legend><%= @ss_class.name %> <small><%= @ss_class.year %> - Q<%= @ss_class.quarter %></small></legend>
+    <p>
+      <b>Class Date:</b>
+      <%= best_in_place @ss_class_session, :date %>
+    </p>
 
-<p>
-  <b>Date:</b>
-  <%= @ss_class_session.date %>
-</p>
+    <p>
+      <b>Instructor:</b>
+      <%= best_in_place @ss_class_session,
+                        :instructor_id,
+                        :type => :select,
+                        :collection => @instructors.collect { |u| [u.id, u.name] }
+      %>
+    </p>
 
-<p>
-  <b>Instructor:</b>
-  <%= @ss_class_session.instructor_id %>
-</p>
+
+      <label><b>Students</b></label>
+      <%= f.text_field :attendance_tokens,
+                       "data-pre" => @ss_class_session.users.map{|u| {
+                               :name => [u.name_first, u.name_last].join(' '),
+                               :id => u.id}
+                       }.to_json %>
+      <span class="help-block">Type names to add students for attendance</span>
+
+      <%= f.submit "Update attendance", :class => "btn" %>
+      <%= link_to "Back to #{@ss_class.name}",
+                  @ss_class,
+                  :class => "btn" %>
+    </fieldset>
+<% end %>
 
 
-<%= link_to 'Edit', edit_ss_class_session_path(@ss_class_session) %> |
-<%= link_to 'Back', ss_class_sessions_path %>
