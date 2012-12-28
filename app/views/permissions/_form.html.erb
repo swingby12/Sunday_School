@@ -1,0 +1,59 @@
+<%= form_for(@permission, :html => {:class =>"form-horizontal"}) do |f| %>
+  <% if @permission.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@permission.errors.count, "error") %> prohibited this permission from being saved:</h2>
+
+      <ul>
+      <% @permission.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :user_id,
+                "User",
+                :class => "control-label"
+    %>
+    <div class="controls">
+      <%= f.select :user_id,
+                   User.all.collect {|u| [u.name, u.id]}
+      %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :category,
+                "Permission Type",
+                :class => "control-label"
+    %>
+    <div class="controls">
+      <%= f.select :category,
+                   permission_collection.map{|u| u.reverse}
+      %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :can_create,
+                "Create Permission",
+                :class => "control-label"
+    %>
+    <div class="controls">
+      <%= f.check_box :can_create %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :can_write,
+                "Edit/Write Permission",
+                :class => "control-label"
+    %>
+    <div class="controls">
+      <%= f.check_box :can_write %>
+    </div>
+  </div>
+
+    <div class="form-actions">
+      <%= f.submit "Submit", :class => "btn btn-primary" %>
+      <%= link_to 'Back', permissions_path, :class => "btn" %>
+    </div>
+<% end %>

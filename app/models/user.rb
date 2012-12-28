@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
 
-  has_many :accesses, foreign_key:"user_id", dependent: :destroy
+  has_many :permissions, foreign_key:"user_id", dependent: :destroy
   has_many :ss_instructors
   has_many :ss_classes,
            :through => :ss_instructors,

@@ -8,17 +8,20 @@
           <label>Year</label>
           <%= text_field_tag :year,
                              params[:year],
-                             :placeholder => Time.now.year
+                             :placeholder => "Year",
+                             :class => "input-block-level"
                              %>
 
           <label>Book</label>
           <%= select_tag :book,
-                         options_from_collection_for_select(@books, "id", "name", params[:book])
+                         options_from_collection_for_select(@books, "id", "name", params[:book]) ,
+                         :class => "input-block-level"
           %>
           <label>Name</label>
           <%= text_field_tag :name,
                              params[:name],
-                             :placeholder => "Enter keywords"
+                             :placeholder => "Enter keywords",
+                             :class => "input-block-level"
           %>
           <button type="submit" class="btn btn-primary"><%= icon_html(:search, true) %>Search</button>
         </fieldset>
@@ -26,7 +29,7 @@
   </div>
   <div class="span8">
 
-    <h3>This is the search result i guess...</h3>
+    <h3>Sunday School Classes</h3>
 
     <table class="table table-bordered table-striped table-hover">
       <tr>

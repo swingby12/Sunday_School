@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121227054038) do
+ActiveRecord::Schema.define(:version => 20121228055715) do
 
   create_table "accesses", :force => true do |t|
     t.integer  "type"
@@ -24,6 +24,15 @@ ActiveRecord::Schema.define(:version => 20121227054038) do
 
   create_table "bibles", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "permissions", :force => true do |t|
+    t.integer  "category"
+    t.boolean  "can_write"
+    t.boolean  "can_create"
+    t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
