@@ -1,4 +1,5 @@
 <%= form_for(@user, :html => {:class => "form-horizontal"}) do |f| %>
+  <legend><%= (params[:action] == "new") ? "Create" : "Update" %> Account Information</legend>
   <% if @user.errors.any? %>
     <div id="error_explanation" class="alert alert-error">
       <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>

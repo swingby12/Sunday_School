@@ -1,20 +1,74 @@
-<p id="notice"><%= notice %></p>
+<h3><%= @user.name %> <small><%= @user.email %></small></h3>
 
-<p>
-  <b>Name first:</b>
-  <%= @user.name_first %>
-</p>
+<h4>Previously Taken Classes</h4>
+<table class="table table-bordered table-striped">
+  <thead>
+  <tr>
+    <th>Year</th>
+    <th>Quarter</th>
+    <th>Name</th>
+    <th># Attended</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @prev_classes.each do |ss_class_session| %>
+  <% ss_class = ss_class_session.ss_class %>
+  <tr>
+    <td><%= ss_class.year %></td>
+    <td>Q<%= ss_class.quarter %></td>
+    <td><%= link_to ss_class.name, ss_class %></td>
+    <td><%= @prev_classes.count[ss_class.id] %></td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>
 
-<p>
-  <b>Name last:</b>
-  <%= @user.name_last %>
-</p>
+<h4>Previously Taught Classes</h4>
+<table class="table table-bordered table-striped">
+  <thead>
+  <tr>
+    <th>Year</th>
+    <th>Quarter</th>
+    <th>Name</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @user.ss_classes.each do |ss_class| %>
+      <tr>
+        <td><%= ss_class.year %></td>
+        <td>Q<%= ss_class.quarter %></td>
+        <td><%= link_to ss_class.name, ss_class %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
 
-<p>
-  <b>Email:</b>
-  <%= @user.email %>
-</p>
+<h4>User Permissions</h4>
+<table class="table table-bordered table-striped">
+  <thead>
+  <tr>
+    <th>Category</th>
+    <th>Can create?</th>
+    <th>Can edit?</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @user.permissions.each do |permission| %>
+      <tr>
+        <td><%= permission_list[permission.category] %></td>
+        <td><%= permission.can_create %></td>
+        <td><%= permission.can_write %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
 
+<div class="form-actions">
+  <%= link_to 'Update account',
+              edit_user_path(@user),
+              :class => "btn btn-primary" %>
+  <%= link_to 'Back',
+              users_path,
+              :class => "btn" %>
+</div>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>

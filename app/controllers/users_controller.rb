@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
+  helper PermissionsHelper
   # GET /users
   # GET /users.json
   def index
-    @users = User.where("name_first like ? OR name_last like ?", "%#{params[:q]}%", "%#{params[:q]}%")
+    @users = User.order("name_first ASC").where("name_first like ? OR name_last like ?", "%#{params[:q]}%", "%#{params[:q]}%")
 
     results = @users.map(&:attributes)
     results = @users.map{|u| {:name => [u.name_first, u.name_last].join(' '), :id => u.id}}
@@ -18,6 +19,10 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
 
+    # Previously Taken Classes
+    @prev_classes = SsClassSession.joins(:users).group(:class_id).where("\"users\".\"id\" = #{@user.id}")
+    @prev_classes_count = @prev_classes.count
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @user }
@@ -30,7 +35,7 @@ class UsersController < ApplicationController
     @user = User.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html{ render "_form"}
       format.json { render json: @user }
     end
   end
@@ -38,6 +43,9 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+    respond_to do |format|
+      format.html{ render "_form"}
+    end
   end
 
   # POST /users
@@ -52,7 +60,7 @@ class UsersController < ApplicationController
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else
-        format.html { render action: "new" }
+        format.html { render action: "_form" }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
