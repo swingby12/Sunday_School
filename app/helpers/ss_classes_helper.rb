@@ -1,11 +1,72 @@
 module SsClassesHelper
 
+  def view_name
+    if @permission[:write]
+      best_in_place @ss_class, :name
+    else
+      @ss_class.name
+    end
+  end
+
+  def view_year
+    if @permission[:write]
+      best_in_place @ss_class, :year
+    else
+      @ss_class.year
+    end
+  end
+
+  def view_quarter
+    if @permission[:write]
+      best_in_place @ss_class,
+                    :quarter,
+                    :type => :select,
+                    :collection => [[1,'Q1'],[2,'Q2'],[3,'Q3'],[4,'Q4']]
+    else
+      "Q#{@ss_class.quarter}"
+    end
+  end
+
+  def view_book
+    if @permission[:write]
+      best_in_place @ss_class,
+                    :bible_id,
+                    :type => :select,
+                    :collection => bible_collection
+    else
+      bible_list[@ss_class.bible_id]
+    end
+  end
+
+  def view_btn_new_session
+    if @permission[:write]
+      link_to 'Create New Session',
+        {
+          :action => 'new_session',
+          :controller => 'ss_classes'
+        },
+        :remote => true,
+        :class => "btn btn-primary"
+    end
+  end
+
+  def view_btn_attendance
+    if @permission[:write]
+      link_to 'View Attendance',
+        {
+          :action => 'attendance',
+          :controller => 'ss_classes'
+        },
+        :class => "btn btn-info"
+    end
+  end
+
   def instructor_list(instructors)
     raw(parse_instructors(instructors))
   end
 
-
   private
+
   def parse_instructors(instructors)
     list_of_instructor = []
     instructors.each do |instructor|

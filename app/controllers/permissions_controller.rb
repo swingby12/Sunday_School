@@ -1,4 +1,5 @@
 class PermissionsController < ApplicationController
+
   # GET /permissions
   # GET /permissions.json
   def index
@@ -80,4 +81,5 @@ class PermissionsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 end

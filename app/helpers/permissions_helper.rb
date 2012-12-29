@@ -4,13 +4,22 @@ module PermissionsHelper
     permission_list.each_with_index { |cat, index|
       permission_col.append([index, cat])
     }
-    return permission_col
+    permission_col
   end
 
   def permission_list
-    return [
+    [
+        "Administrator",
         "Sunday School",
         "TBD"
     ]
+  end
+
+  def permission_id
+    {
+        :admin => 0,
+        :ss => 1,
+        :tbd => 2
+    }
   end
 end

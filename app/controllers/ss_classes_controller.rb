@@ -1,15 +1,11 @@
 class SsClassesController < ApplicationController
-
+  include PermissionsHelper
+  helper_method :check_class_permission
 
   # GET /ss_classes
   # GET /ss_classes.json
   def index
     @ss_classes = SsClass.by_year(params[:year]).by_bible_id(params[:book]).by_name(params[:name])
-
-    empty_book = Bible.new
-    empty_book.id = nil
-    empty_book.name = "Any"
-    @books = Bible.all.unshift(empty_book)
 
     respond_to do |format|
       format.html # index.html.erb
@@ -23,6 +19,8 @@ class SsClassesController < ApplicationController
     @ss_class = SsClass.find(params[:id])
     @ss_sessions = @ss_class.ss_class_sessions.order('date ASC')
     @instructors = @ss_class.instructors
+
+    check_class_permission
 
     @ss_instructor = SsInstructor.new
     @users = User.all
@@ -123,6 +121,27 @@ class SsClassesController < ApplicationController
 
     respond_to do |format|
       format.html { render action: "attendance" }
+    end
+  end
+
+  ##### Heler Functions #####
+
+  # Define permission variables upon user
+  # Permission is determined from permission table
+  # If an user is also an instructor for that particular class, both permissions are given
+  def check_class_permission
+    p = Permission.where(:category => permission_id[:ss]).where(:user_id => current_user.id).first
+    @permission = Hash.new
+    if p
+      @permission[:write] = p.can_write
+      @permission[:create] = p.can_create
+    end
+    @ss_class.instructors.each do |instructor|
+      if instructor.id == current_user.id
+        @permission[:write] = true
+        @permission[:create] = true
+        return
+      end
     end
   end
 end

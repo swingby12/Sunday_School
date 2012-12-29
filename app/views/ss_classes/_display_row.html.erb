@@ -1,19 +1,17 @@
 <tr id="session_row_<%= @ss_class_session.id %>">
-  <td><%= best_in_place @ss_class_session, :date, :type => :date %></td>
-  <td><%= best_in_place @ss_class_session,
-                        :instructor_id,
-                        :type => :select,
-                        :collection => @instructors.collect { |u| [u.id, u.name] }
-  %></td>
+  <td><%= view_session_date %></td>
+  <td><%= view_session_instructor %></td>
   <td></td>
-  <td>
-    <%= link_to raw("#{icon_html('edit')} Edit/Attendance"),
-                ss_class_session_path(@ss_class_session)
-    %> | <%= link_to raw("#{icon_html('remove')} Remove"),
-                @ss_class_session,
-                confirm: 'Are you sure?',
-                method: :delete
-    %>
-  </td>
+  <% if @permission[:write] %>
+      <td>
+        <%= link_to raw("#{icon_html('edit')} Edit/Attendance"),
+                    ss_class_session_path(@ss_class_session)
+        %> | <%= link_to raw("#{icon_html('remove')} Remove"),
+                    @ss_class_session,
+                    confirm: 'Are you sure?',
+                    method: :delete
+        %>
+      </td>
+  <% end %>
 
 </tr>
