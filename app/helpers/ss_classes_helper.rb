@@ -39,7 +39,7 @@ module SsClassesHelper
   end
 
   def view_btn_new_session
-    if user_permission[:ss][:write]
+    if user_permission[:ss][:write] || is_instructor?
       link_to 'Create New Session',
         {
           :action => 'new_session',
@@ -51,7 +51,7 @@ module SsClassesHelper
   end
 
   def view_btn_attendance
-    if user_permission[:ss][:read]
+    if user_permission[:ss][:read] || is_instructor?
       link_to 'View Attendance',
         {
           :action => 'attendance',
@@ -66,6 +66,7 @@ module SsClassesHelper
   end
 
   private
+
 
   def parse_instructors(instructors)
     list_of_instructor = []

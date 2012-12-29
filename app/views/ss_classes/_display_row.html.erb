@@ -9,7 +9,7 @@
       <td></td>
     <% end %>
   <% end %>
-  <% if user_permission[:ss][:write] %>
+  <% if user_permission[:ss][:write] or is_instructor? %>
       <td>
         <%= link_to raw("#{icon_html('edit')} Edit/Attendance"),
                     ss_class_session_path(@ss_class_session)

@@ -3,18 +3,23 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    unless user_permission[:admin][:read]
-      not_found
-    end
+    if request.xhr?
+      @users = User.order("name_first ASC").where("name_first like ? OR name_last like ?", "%#{params[:q]}%", "%#{params[:q]}%")
 
-    @users = User.order("name_first ASC").where("name_first like ? OR name_last like ?", "%#{params[:q]}%", "%#{params[:q]}%")
-
-    results = @users.map(&:attributes)
-    results = @users.map{|u| {:name => [u.name_first, u.name_last].join(' '), :id => u.id}}
-    #results = results.map(&:attributes)
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render :json => results  }
+      results = @users.map(&:attributes)
+      results = @users.map{|u| {:name => [u.name_first, u.name_last].join(' '), :id => u.id}}
+      #results = results.map(&:attributes)
+      respond_to do |format|
+        format.json { render :json => results  }
+      end
+    else
+      unless user_permission[:admin][:read]
+        not_found
+      end
+      @users = User.order("name_first ASC").all
+      respond_to do |format|
+        format.html # index.html.erb
+      end
     end
   end
 

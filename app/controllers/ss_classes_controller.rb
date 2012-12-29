@@ -1,6 +1,5 @@
 class SsClassesController < ApplicationController
-  helper_method :check_class_permission
-
+  helper_method :is_instructor?
   # GET /ss_classes
   # GET /ss_classes.json
   def index
@@ -18,8 +17,6 @@ class SsClassesController < ApplicationController
     @ss_class = SsClass.find(params[:id])
     @ss_sessions = @ss_class.ss_class_sessions.order('date ASC')
     @instructors = @ss_class.instructors
-
-    check_class_permission
 
     if user_permission[:ss][:write]
       @ss_instructor = SsInstructor.new
@@ -72,7 +69,7 @@ class SsClassesController < ApplicationController
   # PUT /ss_classes/1.json
   def update
     @ss_class = SsClass.find(params[:id])
-    check_class_permission
+
     unless user_permission[:ss][:write]
       redirect_to @ss_class
     end
@@ -108,8 +105,8 @@ class SsClassesController < ApplicationController
   # Create new class session within the table
   def new_session
     @ss_class = SsClass.find(params[:id])
-    check_class_permission
-    unless user_permission[:ss][:write]
+
+    unless user_permission[:ss][:write] || is_instructor?
       redirect_to @ss_class
     end
 
@@ -120,12 +117,12 @@ class SsClassesController < ApplicationController
   # GET /ss_classes/1/attendance
   # GET /ss_classes/1.json
   def attendance
-    unless user_permission[:ss][:read]
-      redirect_to @ss_class
-    end
-
     @ss_class = SsClass.find(params[:id])
     @ss_sessions = @ss_class.ss_class_sessions.order('date ASC')
+
+    unless user_permission[:ss][:read] || is_instructor?
+      redirect_to @ss_class
+    end
 
     @arr_data = Hash.new(false)
     @students = []
@@ -147,25 +144,15 @@ class SsClassesController < ApplicationController
     end
   end
 
-  ##### Helper Functions #####
-
-  # Define permission variables upon user
-  # Permission is determined from permission table
-  # If an user is also an instructor for that particular class, both permissions are given
-  def check_class_permission
+  def is_instructor?
     if signed_in?
       @ss_class.instructors.each do |instructor|
         if instructor.id == current_user.id
-          unless user_permission[:ss]
-            user_permission[:ss] = Hash.new
-          end
-          user_permission[:ss][:read] = true
-          user_permission[:ss][:write] = true
-          return
+          return true
         end
       end
     end
+    return false
   end
-
 end
 

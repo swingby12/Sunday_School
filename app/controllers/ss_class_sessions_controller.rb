@@ -1,4 +1,5 @@
 class SsClassSessionsController < ApplicationController
+  helper_method :is_instructor?
   # GET /ss_class_sessions
   # GET /ss_class_sessions.json
   def index
@@ -45,8 +46,7 @@ class SsClassSessionsController < ApplicationController
     @ss_class_session = SsClassSession.new(params[:ss_class_session])
     @instructors = SsClass.find(@ss_class_session.class_id).instructors
 
-    check_class_permission
-    unless user_permission[:ss][:write]
+    unless user_permission[:ss][:write] or is_instructor?
       not_found
     end
     @success = @ss_class_session.save
@@ -60,6 +60,10 @@ class SsClassSessionsController < ApplicationController
   # PUT /ss_class_sessions/1.json
   def update
     @ss_class_session = SsClassSession.find(params[:id])
+
+    unless user_permission[:ss][:write] or is_instructor?
+      not_found
+    end
 
     respond_to do |format|
       if @ss_class_session.update_attributes(params[:ss_class_session])
@@ -76,6 +80,11 @@ class SsClassSessionsController < ApplicationController
   # DELETE /ss_class_sessions/1.json
   def destroy
     @ss_class_session = SsClassSession.find(params[:id])
+
+    unless user_permission[:ss][:write] or is_instructor?
+      not_found
+    end
+
     ss_class_id = @ss_class_session.class_id
     ss_session_date = @ss_class_session.date
     @ss_class_session.destroy
@@ -88,21 +97,15 @@ class SsClassSessionsController < ApplicationController
   end
 
 
-  # Define permission variables upon user
-  # Permission is determined from permission table
-  # If an user is also an instructor for that particular class, both permissions are given
-  def check_class_permission
+  def is_instructor?
     if signed_in?
       @ss_class_session.ss_class.instructors.each do |instructor|
         if instructor.id == current_user.id
-          unless user_permission[:ss]
-            user_permission[:ss] = Hash.new
-          end
-          user_permission[:ss][:read] = true
-          user_permission[:ss][:write] = true
-          return
+          return true
         end
       end
     end
+    return false
   end
+
 end

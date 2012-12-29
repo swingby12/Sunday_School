@@ -32,7 +32,7 @@
     <% if signed_in? %>
         <th>Present?</th>
     <% end %>
-    <% if user_permission[:ss][:write] %>
+    <% if user_permission[:ss][:write] || is_instructor? %>
         <th>Actions</th>
     <% end %>
   </tr>
