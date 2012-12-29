@@ -120,6 +120,10 @@ class SsClassesController < ApplicationController
   # GET /ss_classes/1/attendance
   # GET /ss_classes/1.json
   def attendance
+    unless user_permission[:ss][:read]
+      redirect_to @ss_class
+    end
+
     @ss_class = SsClass.find(params[:id])
     @ss_sessions = @ss_class.ss_class_sessions.order('date ASC')
 

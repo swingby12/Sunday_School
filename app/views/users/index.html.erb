@@ -4,16 +4,21 @@
   <tr>
     <th>Name</th>
     <th>Email</th>
-    <th></th>
-    <th></th>
+    <% if user_permission[:admin][:write] %>
+        <th>Action</th>
+    <% end %>
   </tr>
 
 <% @users.each do |user| %>
   <tr>
     <td><%= link_to "#{user.name_first} #{user.name_last}", user %></td>
     <td><%= user.email %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %></td>
+    <% if user_permission[:admin][:write] %>
+        <td>
+          <%= link_to 'Edit', edit_user_path(user) %>
+          <%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete %>
+        </td>
+    <% end %>
   </tr>
 <% end %>
 </table>

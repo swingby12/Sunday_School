@@ -12,7 +12,7 @@ module SsClassSessionsHelper
       best_in_place @ss_class_session,
                     :instructor_id,
                     :type => :select,
-                    :collection => @instructors.collect { |u| [u.id, u.name] }.prepend([nil, "None"])
+                    :collection => @instructors.collect { |u| [u.id, u.name] }
     else
       @ss_class_session.instructor.name
     end

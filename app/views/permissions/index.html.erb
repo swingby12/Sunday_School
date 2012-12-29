@@ -12,23 +12,25 @@
   </tr>
 
 <% @permissions.each do |permission| %>
-  <tr>
-    <td><%= link_to permission.user.name, permission.user %></td>
-    <td><%= best_in_place permission,
-                          :category,
-                          :type => :select,
-                          :collection => permission_collection
-    %></td>
-    <td><%= best_in_place permission,
-                          :can_read,
-                          :type => :checkbox
-    %></td>
-    <td><%= best_in_place permission,
-                          :can_write,
-                          :type => :checkbox
-    %></td>
-    <td><%= link_to 'Destroy', permission, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
+  <% if permission.user %>
+      <tr>
+        <td><%= link_to permission.user.name, permission.user %></td>
+        <td><%= best_in_place permission,
+                              :category,
+                              :type => :select,
+                              :collection => permission_collection
+        %></td>
+        <td><%= best_in_place permission,
+                              :can_read,
+                              :type => :checkbox
+        %></td>
+        <td><%= best_in_place permission,
+                              :can_write,
+                              :type => :checkbox
+        %></td>
+        <td><%= link_to 'Destroy', permission, confirm: 'Are you sure?', method: :delete %></td>
+      </tr>
+  <% end %>
 <% end %>
 </table>
 

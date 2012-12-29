@@ -3,6 +3,10 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    unless user_permission[:admin][:read]
+      not_found
+    end
+
     @users = User.order("name_first ASC").where("name_first like ? OR name_last like ?", "%#{params[:q]}%", "%#{params[:q]}%")
 
     results = @users.map(&:attributes)
@@ -18,6 +22,9 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+    unless user_permission[:admin][:read] or (current_user.id == @user.id)
+      not_found
+    end
 
     # Previously Taken Classes
     @prev_classes = SsClassSession.joins(:users).group(:class_id).where("\"users\".\"id\" = #{@user.id}")
@@ -71,6 +78,10 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
 
+    unless user_permission[:admin][:read] or (current_user.id == @user.id)
+      not_found
+    end
+
     respond_to do |format|
       if @user.update_attributes(params[:user])
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
@@ -85,6 +96,9 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    unless user_permission[:admin][:write]
+      not_found
+    end
     @user = User.find(params[:id])
     @user.destroy
 

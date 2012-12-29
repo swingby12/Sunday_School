@@ -50,8 +50,7 @@
 
             <td><%= bible_list[ss_class.bible_id] %></td>
             <% if user_permission[:ss][:write] %>
-                <td><%= link_to 'Edit', edit_ss_class_path(ss_class) %> | <%=
-                    link_to 'Destroy', ss_class, confirm: 'Are you sure?', method: :delete %></td>
+                <td><%= link_to 'Destroy', ss_class, confirm: 'Are you sure?', method: :delete %></td>
             <% end %>
           </tr>
       <% end %>

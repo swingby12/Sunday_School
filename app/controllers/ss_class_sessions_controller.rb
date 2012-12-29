@@ -98,8 +98,8 @@ class SsClassSessionsController < ApplicationController
           unless user_permission[:ss]
             user_permission[:ss] = Hash.new
           end
+          user_permission[:ss][:read] = true
           user_permission[:ss][:write] = true
-          user_permission[:ss][:create] = true
           return
         end
       end
