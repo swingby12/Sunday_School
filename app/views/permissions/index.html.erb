@@ -5,7 +5,7 @@
   <tr>
     <th>User Name</th>
     <th>Category</th>
-    <th>Can Create?</th>
+    <th>Can Read?</th>
     <th>Can Write?</th>
     <th>Action</th>
 
@@ -20,7 +20,7 @@
                           :collection => permission_collection
     %></td>
     <td><%= best_in_place permission,
-                          :can_create,
+                          :can_read,
                           :type => :checkbox
     %></td>
     <td><%= best_in_place permission,

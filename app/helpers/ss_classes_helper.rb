@@ -51,7 +51,7 @@ module SsClassesHelper
   end
 
   def view_btn_attendance
-    if @permission[:write]
+    if @permission[:read]
       link_to 'View Attendance',
         {
           :action => 'attendance',

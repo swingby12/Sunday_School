@@ -92,13 +92,8 @@ class SsClassSessionsController < ApplicationController
   # Permission is determined from permission table
   # If an user is also an instructor for that particular class, both permissions are given
   def check_class_permission
-    @permission = Hash.new
+    check_ss_permission
     if signed_in?
-      p = Permission.where(:category => permission_id[:ss]).where(:user_id => current_user.id).first
-      if p
-        @permission[:write] = p.can_write
-        @permission[:create] = p.can_create
-      end
       @ss_class_session.ss_class.instructors.each do |instructor|
         if instructor.id == current_user.id
           @permission[:write] = true

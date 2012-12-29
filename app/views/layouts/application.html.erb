@@ -21,11 +21,14 @@
   <%= render 'shared/footer' %>
 </div>
 <% if Rails.env.development? %>
-    <% if @permission %>
-        <p>Can Create? <%= @permission[:create] %></p>
-        <p>Can Write? <%= @permission[:write] %></p>
-    <% end %>
-    <%= debug(params) %>
+    <div class="container">
+      <div class="row">
+        <%= @permission %>
+      </div>
+      <div>
+        <%= debug(params) %>
+      </div>
+    </div>
 <% end %>
 </body>
 </html>

@@ -1,5 +1,5 @@
 class Permission < ActiveRecord::Base
-  attr_accessible :category, :can_create, :can_write, :user_id
+  attr_accessible :category, :can_read, :can_write, :user_id
 
   belongs_to :user
 

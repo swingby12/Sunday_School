@@ -23,13 +23,18 @@ module PermissionsHelper
     }
   end
 
+  def permission_type(id)
+    permission_list[permission_id[id]]
+  end
+
   def check_ss_permission
     @permission = Hash.new
+    @permission[:type] = permission_type(:ss)
     if signed_in?
       p = Permission.where(:category => permission_id[:ss]).where(:user_id => current_user.id).first
       if p
         @permission[:write] = p.can_write
-        @permission[:create] = p.can_create
+        @permission[:read] = p.can_read
       end
     end
   end
