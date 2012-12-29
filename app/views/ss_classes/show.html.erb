@@ -2,7 +2,7 @@
 <p>
   <b>Book:</b> <%= view_book %> <br>
   <strong>Instructors: </strong>
-  <% if @permission[:write] %>
+  <% if user_permission[:ss][:write] %>
     <div class="span8">
       <%= form_for(@ss_class, :html => {:class => "form-inline"}) do |f| %>
           <div class="input-append">
@@ -32,7 +32,7 @@
     <% if signed_in? %>
         <th>Present?</th>
     <% end %>
-    <% if @permission[:write] %>
+    <% if user_permission[:ss][:write] %>
         <th>Actions</th>
     <% end %>
   </tr>

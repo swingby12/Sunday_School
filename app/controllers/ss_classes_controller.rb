@@ -6,8 +6,6 @@ class SsClassesController < ApplicationController
   def index
     @ss_classes = SsClass.by_year(params[:year]).by_bible_id(params[:book]).by_name(params[:name])
 
-    check_ss_permission
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @ss_classes }
@@ -23,7 +21,7 @@ class SsClassesController < ApplicationController
 
     check_class_permission
 
-    if @permission[:write]
+    if user_permission[:ss][:write]
       @ss_instructor = SsInstructor.new
       @users = User.all
     end
@@ -54,8 +52,8 @@ class SsClassesController < ApplicationController
   # POST /ss_classes.json
   def create
     @ss_class = SsClass.new(params[:ss_class])
-    check_ss_permission
-    unless @permission[:write]
+
+    unless user_permission[:ss][:write]
       redirect_to ss_classes_path
     end
 
@@ -75,7 +73,7 @@ class SsClassesController < ApplicationController
   def update
     @ss_class = SsClass.find(params[:id])
     check_class_permission
-    unless @permission[:write]
+    unless user_permission[:ss][:write]
       redirect_to @ss_class
     end
 
@@ -94,8 +92,8 @@ class SsClassesController < ApplicationController
   # DELETE /ss_classes/1.json
   def destroy
     @ss_class = SsClass.find(params[:id])
-    check_ss_permission
-    unless @permission[:write]
+
+    unless user_permission[:ss][:write]
       redirect_to ss_classes_path
     end
 
@@ -111,7 +109,7 @@ class SsClassesController < ApplicationController
   def new_session
     @ss_class = SsClass.find(params[:id])
     check_class_permission
-    unless @permission[:write]
+    unless user_permission[:ss][:write]
       redirect_to @ss_class
     end
 
@@ -151,12 +149,14 @@ class SsClassesController < ApplicationController
   # Permission is determined from permission table
   # If an user is also an instructor for that particular class, both permissions are given
   def check_class_permission
-    check_ss_permission
     if signed_in?
       @ss_class.instructors.each do |instructor|
         if instructor.id == current_user.id
-          @permission[:read] = true
-          @permission[:write] = true
+          unless user_permission[:ss]
+            user_permission[:ss] = Hash.new
+          end
+          user_permission[:ss][:read] = true
+          user_permission[:ss][:write] = true
           return
         end
       end

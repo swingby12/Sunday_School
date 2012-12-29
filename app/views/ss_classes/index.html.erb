@@ -37,7 +37,7 @@
         <th>Year</th>
         <th>Quarter</th>
         <th>Book</th>
-        <% if @permission[:write] %>
+        <% if user_permission[:ss][:write] %>
             <th></th>
         <% end %>
       </tr>
@@ -49,7 +49,7 @@
             <td><%= "Q#{ss_class.quarter}" %></td>
 
             <td><%= bible_list[ss_class.bible_id] %></td>
-            <% if @permission[:write] %>
+            <% if user_permission[:ss][:write] %>
                 <td><%= link_to 'Edit', edit_ss_class_path(ss_class) %> | <%=
                     link_to 'Destroy', ss_class, confirm: 'Are you sure?', method: :delete %></td>
             <% end %>
@@ -59,7 +59,7 @@
 
     <br />
 
-    <% if @permission[:write] %>
+    <% if user_permission[:ss][:write] %>
         <%= link_to 'Add new class', new_ss_class_path, :class => "btn btn-primary" %>
     <% end %>
 

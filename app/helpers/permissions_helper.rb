@@ -27,15 +27,39 @@ module PermissionsHelper
     permission_list[permission_id[id]]
   end
 
-  def check_ss_permission
+  def check_permission(key)
     @permission = Hash.new
-    @permission[:type] = permission_type(:ss)
+    @permission[:type] = permission_type(key)
     if signed_in?
-      p = Permission.where(:category => permission_id[:ss]).where(:user_id => current_user.id).first
+      p = Permission.where(:category => permission_id[key]).where(:user_id => current_user.id).first
       if p
         @permission[:write] = p.can_write
         @permission[:read] = p.can_read
       end
     end
+  end
+
+  def permission_key(key)
+    perm = Hash.new
+    if signed_in?
+      p = Permission.where(:category => permission_id[key]).where(:user_id => current_user.id).first
+      if p
+        perm[:write] = p.can_write
+        perm[:read] = p.can_read
+      end
+    end
+    return perm
+  end
+
+  def generate_permission
+    user_permission = Hash.new
+    permission_id.each do |key, val|
+      user_permission[key] = permission_key(key)
+    end
+    user_permission
+  end
+
+  def user_permission
+    @user_permission ||= generate_permission
   end
 end

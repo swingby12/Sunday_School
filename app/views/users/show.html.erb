@@ -48,7 +48,7 @@
   <thead>
   <tr>
     <th>Category</th>
-    <th>Can create?</th>
+    <th>Can read?</th>
     <th>Can edit?</th>
   </tr>
   </thead>
@@ -56,7 +56,7 @@
   <% @user.permissions.each do |permission| %>
       <tr>
         <td><%= permission_list[permission.category] %></td>
-        <td><%= permission.can_create %></td>
+        <td><%= permission.can_read %></td>
         <td><%= permission.can_write %></td>
       </tr>
   <% end %>

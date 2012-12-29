@@ -1,7 +1,7 @@
 module SsClassesHelper
 
   def view_name
-    if @permission[:write]
+    if user_permission[:ss][:write]
       best_in_place @ss_class, :name
     else
       @ss_class.name
@@ -9,7 +9,7 @@ module SsClassesHelper
   end
 
   def view_year
-    if @permission[:write]
+    if user_permission[:ss][:write]
       best_in_place @ss_class, :year
     else
       @ss_class.year
@@ -17,7 +17,7 @@ module SsClassesHelper
   end
 
   def view_quarter
-    if @permission[:write]
+    if user_permission[:ss][:write]
       best_in_place @ss_class,
                     :quarter,
                     :type => :select,
@@ -28,7 +28,7 @@ module SsClassesHelper
   end
 
   def view_book
-    if @permission[:write]
+    if user_permission[:ss][:write]
       best_in_place @ss_class,
                     :bible_id,
                     :type => :select,
@@ -39,7 +39,7 @@ module SsClassesHelper
   end
 
   def view_btn_new_session
-    if @permission[:write]
+    if user_permission[:ss][:write]
       link_to 'Create New Session',
         {
           :action => 'new_session',
@@ -51,7 +51,7 @@ module SsClassesHelper
   end
 
   def view_btn_attendance
-    if @permission[:read]
+    if user_permission[:ss][:read]
       link_to 'View Attendance',
         {
           :action => 'attendance',
