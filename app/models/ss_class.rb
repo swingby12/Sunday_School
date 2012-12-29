@@ -1,7 +1,7 @@
 class SsClass < ActiveRecord::Base
   attr_accessible :quarter, :year, :category, :name, :bible_id, :instructor_tokens
 
-  belongs_to :bible
+  #belongs_to :bible
   has_many :ss_class_sessions,
            :foreign_key => "class_id",
            :dependent => :destroy

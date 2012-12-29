@@ -24,11 +24,13 @@ module PermissionsHelper
   end
 
   def check_ss_permission
-    p = Permission.where(:category => permission_id[:ss]).where(:user_id => current_user.id).first
     @permission = Hash.new
-    if p
-      @permission[:write] = p.can_write
-      @permission[:create] = p.can_create
+    if signed_in?
+      p = Permission.where(:category => permission_id[:ss]).where(:user_id => current_user.id).first
+      if p
+        @permission[:write] = p.can_write
+        @permission[:create] = p.can_create
+      end
     end
   end
 end

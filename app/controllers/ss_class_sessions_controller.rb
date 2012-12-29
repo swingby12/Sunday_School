@@ -45,6 +45,10 @@ class SsClassSessionsController < ApplicationController
     @ss_class_session = SsClassSession.new(params[:ss_class_session])
     @instructors = SsClass.find(@ss_class_session.class_id).instructors
 
+    check_class_permission
+    unless @permission[:write]
+      not_found
+    end
     @success = @ss_class_session.save
 
     respond_to do |format|
@@ -80,6 +84,28 @@ class SsClassSessionsController < ApplicationController
       flash[:error] = "Class on #{ss_session_date} is removed"
       format.html { redirect_to ss_class_path(ss_class_id) }
       format.json { head :no_content }
+    end
+  end
+
+
+  # Define permission variables upon user
+  # Permission is determined from permission table
+  # If an user is also an instructor for that particular class, both permissions are given
+  def check_class_permission
+    @permission = Hash.new
+    if signed_in?
+      p = Permission.where(:category => permission_id[:ss]).where(:user_id => current_user.id).first
+      if p
+        @permission[:write] = p.can_write
+        @permission[:create] = p.can_create
+      end
+      @ss_class_session.ss_class.instructors.each do |instructor|
+        if instructor.id == current_user.id
+          @permission[:write] = true
+          @permission[:create] = true
+          return
+        end
+      end
     end
   end
 end

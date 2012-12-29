@@ -1,5 +1,4 @@
 class SsClassesController < ApplicationController
-  include PermissionsHelper
   helper_method :check_class_permission
 
   # GET /ss_classes
@@ -87,6 +86,7 @@ class SsClassesController < ApplicationController
         #format.json { render json: @ss_class.errors, status: :unprocessable_entity }
         format.json {render json: flash}
       end
+      format.html {redirect_to @ss_class, notice: 'Instructors Updated'}
     end
   end
 
@@ -110,6 +110,11 @@ class SsClassesController < ApplicationController
   # Create new class session within the table
   def new_session
     @ss_class = SsClass.find(params[:id])
+    check_class_permission
+    unless @permission[:write]
+      redirect_to @ss_class
+    end
+
     respond_to do |format|
       format.js { render :layout=>false }
     end
@@ -140,25 +145,28 @@ class SsClassesController < ApplicationController
     end
   end
 
-  ##### Heler Functions #####
+  ##### Helper Functions #####
 
   # Define permission variables upon user
   # Permission is determined from permission table
   # If an user is also an instructor for that particular class, both permissions are given
   def check_class_permission
-    p = Permission.where(:category => permission_id[:ss]).where(:user_id => current_user.id).first
     @permission = Hash.new
-    if p
-      @permission[:write] = p.can_write
-      @permission[:create] = p.can_create
-    end
-    @ss_class.instructors.each do |instructor|
-      if instructor.id == current_user.id
-        @permission[:write] = true
-        @permission[:create] = true
-        return
+    if signed_in?
+      p = Permission.where(:category => permission_id[:ss]).where(:user_id => current_user.id).first
+      if p
+        @permission[:write] = p.can_write
+        @permission[:create] = p.can_create
+      end
+      @ss_class.instructors.each do |instructor|
+        if instructor.id == current_user.id
+          @permission[:write] = true
+          @permission[:create] = true
+          return
+        end
       end
     end
   end
+
 end
 
