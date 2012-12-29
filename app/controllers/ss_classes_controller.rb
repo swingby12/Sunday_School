@@ -4,7 +4,7 @@ class SsClassesController < ApplicationController
   # GET /ss_classes
   # GET /ss_classes.json
   def index
-    @ss_classes = SsClass.by_year(params[:year]).by_bible_id(params[:book]).by_name(params[:name]).joins(:bible)
+    @ss_classes = SsClass.by_year(params[:year]).by_bible_id(params[:book]).by_name(params[:name])
 
     empty_book = Bible.new
     empty_book.id = nil

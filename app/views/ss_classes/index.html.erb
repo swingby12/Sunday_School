@@ -14,7 +14,7 @@
 
           <label>Book</label>
           <%= select_tag :book,
-                         options_from_collection_for_select(@books, "id", "name", params[:book]) ,
+                         options_for_select(bible_collection.map{|l| l.reverse}.prepend(["Any", nil]), params[:book]) ,
                          :class => "input-block-level"
           %>
           <label>Name</label>
@@ -46,7 +46,7 @@
             <td><%= ss_class.year %></td>
             <td><%= "Q#{ss_class.quarter}" %></td>
 
-            <td><%= ss_class.bible.name %></td>
+            <td><%= bible_list[ss_class.bible_id] %></td>
             <td><%= link_to 'Edit', edit_ss_class_path(ss_class) %> | <%=
                 link_to 'Destroy', ss_class, confirm: 'Are you sure?', method: :delete %></td>
           </tr>

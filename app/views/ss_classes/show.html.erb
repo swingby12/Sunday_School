@@ -11,7 +11,7 @@
   <%= best_in_place @ss_class,
                     :bible_id,
                     :type => :select,
-                    :collection => Bible.all.collect {|b| [b.id, b.name]}%> <br>
+                    :collection => bible_collection %> <br>
   <strong>Instructors: </strong>
   <%#= instructor_list(@ss_class.instructors) %>
 </p>

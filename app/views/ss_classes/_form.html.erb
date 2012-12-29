@@ -54,7 +54,7 @@
       %>
       <div class="controls">
         <%= f.select    :bible_id,
-                        Bible.all.collect { |b| [b.name, b.id]}
+                        bible_collection.map{|l| l.reverse}
         %>
       </div>
     </div>
