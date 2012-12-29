@@ -37,7 +37,9 @@
         <th>Year</th>
         <th>Quarter</th>
         <th>Book</th>
-        <th></th>
+        <% if @permission[:write] %>
+            <th></th>
+        <% end %>
       </tr>
 
       <% @ss_classes.each do |ss_class| %>
@@ -47,15 +49,19 @@
             <td><%= "Q#{ss_class.quarter}" %></td>
 
             <td><%= bible_list[ss_class.bible_id] %></td>
-            <td><%= link_to 'Edit', edit_ss_class_path(ss_class) %> | <%=
-                link_to 'Destroy', ss_class, confirm: 'Are you sure?', method: :delete %></td>
+            <% if @permission[:write] %>
+                <td><%= link_to 'Edit', edit_ss_class_path(ss_class) %> | <%=
+                    link_to 'Destroy', ss_class, confirm: 'Are you sure?', method: :delete %></td>
+            <% end %>
           </tr>
       <% end %>
     </table>
 
     <br />
 
-    <%= link_to 'Add new class', new_ss_class_path, :class => "btn btn-primary" %>
+    <% if @permission[:write] %>
+        <%= link_to 'Add new class', new_ss_class_path, :class => "btn btn-primary" %>
+    <% end %>
 
   </div>
 </div>

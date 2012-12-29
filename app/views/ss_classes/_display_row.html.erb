@@ -2,6 +2,13 @@
   <td><%= view_session_date %></td>
   <td><%= view_session_instructor %></td>
   <td></td>
+  <% if signed_in? %>
+    <% if SsAttendance.where(:user_id => current_user.id).where(:ss_class_session_id => @ss_class_session.id).first %>
+      <td class="success" style="background-color: #DFF0D8; text-align: center;">X</td>
+    <% else %>
+      <td></td>
+    <% end %>
+  <% end %>
   <% if @permission[:write] %>
       <td>
         <%= link_to raw("#{icon_html('edit')} Edit/Attendance"),

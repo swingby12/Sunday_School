@@ -29,6 +29,9 @@
     <th>Date</th>
     <th>Instructor</th>
     <th>Random Materials</th>
+    <% if signed_in? %>
+        <th>Present?</th>
+    <% end %>
     <% if @permission[:write] %>
         <th>Actions</th>
     <% end %>

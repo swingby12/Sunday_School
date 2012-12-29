@@ -7,6 +7,8 @@ class SsClassesController < ApplicationController
   def index
     @ss_classes = SsClass.by_year(params[:year]).by_bible_id(params[:book]).by_name(params[:name])
 
+    check_ss_permission
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @ss_classes }
@@ -22,8 +24,10 @@ class SsClassesController < ApplicationController
 
     check_class_permission
 
-    @ss_instructor = SsInstructor.new
-    @users = User.all
+    if @permission[:write]
+      @ss_instructor = SsInstructor.new
+      @users = User.all
+    end
 
     respond_to do |format|
       format.html # show.html.erb
@@ -44,13 +48,17 @@ class SsClassesController < ApplicationController
 
   # GET /ss_classes/1/edit
   def edit
-    @ss_class = SsClass.find(params[:id])
+    not_found
   end
 
   # POST /ss_classes
   # POST /ss_classes.json
   def create
     @ss_class = SsClass.new(params[:ss_class])
+    check_ss_permission
+    unless @permission[:write]
+      redirect_to ss_classes_path
+    end
 
     respond_to do |format|
       if @ss_class.save
@@ -67,14 +75,17 @@ class SsClassesController < ApplicationController
   # PUT /ss_classes/1.json
   def update
     @ss_class = SsClass.find(params[:id])
+    check_class_permission
+    unless @permission[:write]
+      redirect_to @ss_class
+    end
 
     respond_to do |format|
       if @ss_class.update_attributes(params[:ss_class])
-        format.html { redirect_to @ss_class, notice: 'Ss class was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @ss_class.errors, status: :unprocessable_entity }
+        #format.json { render json: @ss_class.errors, status: :unprocessable_entity }
+        format.json {render json: flash}
       end
     end
   end
@@ -83,6 +94,11 @@ class SsClassesController < ApplicationController
   # DELETE /ss_classes/1.json
   def destroy
     @ss_class = SsClass.find(params[:id])
+    check_ss_permission
+    unless @permission[:write]
+      redirect_to ss_classes_path
+    end
+
     @ss_class.destroy
 
     respond_to do |format|
