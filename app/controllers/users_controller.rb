@@ -67,6 +67,16 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.save
+        # Initialization
+        if User.count == 1
+          @admin_per = Permission.new(
+            :category => 0, # 0 should be admin
+            :can_read => true,
+            :can_write => true,
+            :user_id => @user.id
+          )
+          @admin_per.save
+        end
         sign_in @user
         flash[:success] = "Welcome Back"
         format.html { redirect_to @user, notice: 'User was successfully created.' }

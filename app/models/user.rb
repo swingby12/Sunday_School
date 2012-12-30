@@ -8,13 +8,15 @@ class User < ActiveRecord::Base
   has_many :permissions,
            :foreign_key => "user_id",
            :dependent => :destroy
-  has_many :ss_instructors
+  has_many :ss_instructors,
+           :dependent => :destroy
   has_many :ss_classes,
            :through => :ss_instructors,
            :source => :ss_class,
            :dependent => :destroy
   #has_many :ss_classes, through: :ss_class_sessions, source: :ss_class
-  has_many :ss_attendances
+  has_many :ss_attendances,
+           :dependent => :destroy
   has_many :sessions,
            :through => :ss_attendances,
            :source => :ss_class_session
@@ -23,7 +25,6 @@ class User < ActiveRecord::Base
            :dependent => :nullify
 
   # Validations
-  # TODO: Work on the password validations
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email,
             :presence => true,
