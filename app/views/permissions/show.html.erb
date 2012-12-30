@@ -1,8 +1,7 @@
-<p id="notice"><%= notice %></p>
 
 <p>
   <b>Type:</b>
-  <%= @permission.category %>
+  <%= permission_list[@permission.category] %>
 </p>
 
 <p>
@@ -17,9 +16,7 @@
 
 <p>
   <b>User:</b>
-  <%= @permission.user_id %>
+  <%= @permission.user.name %>
 </p>
 
-
-<%= link_to 'Edit', edit_permission_path(@permission) %> |
 <%= link_to 'Back', permissions_path %>

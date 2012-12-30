@@ -3,6 +3,9 @@ class PermissionsController < ApplicationController
   # GET /permissions
   # GET /permissions.json
   def index
+    unless user_permission[:admin][:read]
+      not_found
+    end
     @permissions = Permission.all
 
     respond_to do |format|
@@ -14,6 +17,9 @@ class PermissionsController < ApplicationController
   # GET /permissions/1
   # GET /permissions/1.json
   def show
+    unless user_permission[:admin][:read]
+      not_found
+    end
     @permission = Permission.find(params[:id])
 
     respond_to do |format|
@@ -35,12 +41,16 @@ class PermissionsController < ApplicationController
 
   # GET /permissions/1/edit
   def edit
-    @permission = Permission.find(params[:id])
+    not_found
+    #@permission = Permission.find(params[:id])
   end
 
   # POST /permissions
   # POST /permissions.json
   def create
+    unless user_permission[:admin][:read]
+      not_found
+    end
     @permission = Permission.new(params[:permission])
 
     respond_to do |format|
@@ -57,6 +67,9 @@ class PermissionsController < ApplicationController
   # PUT /permissions/1
   # PUT /permissions/1.json
   def update
+    unless user_permission[:admin][:read]
+      not_found
+    end
     @permission = Permission.find(params[:id])
 
     respond_to do |format|
@@ -73,6 +86,9 @@ class PermissionsController < ApplicationController
   # DELETE /permissions/1
   # DELETE /permissions/1.json
   def destroy
+    unless user_permission[:admin][:read]
+      not_found
+    end
     @permission = Permission.find(params[:id])
     @permission.destroy
 
