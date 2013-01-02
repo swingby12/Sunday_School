@@ -30,6 +30,10 @@ group :assets do
 
   # In place edit
   gem 'best_in_place'
+
+  # Storage
+  gem 'paperclip'
+  gem 'aws-sdk'
 end
 
 #gem 'heroku'

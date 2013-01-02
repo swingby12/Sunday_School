@@ -1,7 +1,23 @@
 <tr id="session_row_<%= @ss_class_session.id %>">
   <td><%= view_session_date %></td>
   <td><%= view_session_instructor %></td>
-  <td></td>
+  <td>
+    <% @ss_class_session.ss_class_session_notes.each do |note| %>
+        <%= link_to note.file_file_name,
+                    note.file.url,
+                    :rel => "tooltip",
+                    :title => note.file_file_name %>
+        <% if user_permission[:ss][:write] or is_instructor? %>
+            <%= link_to icon_html('remove'),
+                        note,
+                        confirm: 'Delete this note?',
+                        method: :delete,
+                        :rel => "tooltip",
+                        :title => "Remove this attachment"
+            %>
+        <% end %>
+    <% end %>
+  </td>
   <% if signed_in? %>
     <% if SsAttendance.where(:user_id => current_user.id).where(:ss_class_session_id => @ss_class_session.id).first %>
       <td class="success" style="background-color: #DFF0D8; text-align: center;">X</td>
@@ -10,8 +26,32 @@
     <% end %>
   <% end %>
   <% if user_permission[:ss][:write] or is_instructor? %>
+      <div id="upload_<%= @ss_class_session.id %>" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h3 id="myModalLabel">Add new file</h3>
+        </div>
+        <%= form_for(SsClassSessionNote.new) do |f| %>
+        <div class="modal-body">
+
+            <%= f.hidden_field :ss_class_session_id,
+                               :value => @ss_class_session.id %>
+             <%= f.file_field :file %>
+        </div>
+        <div class="modal-footer">
+          <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+          <%= f.submit "Upload File", :class => "btn btn-primary" %>
+        </div>
+        <% end %>
+      </div>
       <td>
-        <%= link_to raw("#{icon_html('edit')} Edit/Attendance"),
+        <%= link_to "Upload File",
+                    "#upload_#{@ss_class_session.id}",
+                    :role => "button",
+                    :data => {
+                            :toggle => "modal"
+                    }%>
+         | <%= link_to raw("#{icon_html('edit')} Edit/Attendance"),
                     ss_class_session_path(@ss_class_session)
         %> | <%= link_to raw("#{icon_html('remove')} Remove"),
                     @ss_class_session,

@@ -6,6 +6,8 @@ class SsClassSession < ActiveRecord::Base
   has_many :users,
            :through => :ss_attendances
 
+  has_many :ss_class_session_notes
+
   attr_reader :attendance_tokens
   def attendance_tokens=(ids)
     self.user_ids = ids.split(",")

@@ -1,5 +1,7 @@
 SundaySchool::Application.routes.draw do
 
+  resources :ss_class_session_notes
+
   resources :permissions
 
   resources :bibles
