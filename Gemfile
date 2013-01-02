@@ -7,7 +7,6 @@ gem 'rails', '3.2.1'
 
 gem 'sqlite3'
 
-
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
@@ -27,6 +26,12 @@ group :assets do
 
   # In place edit
   gem 'best_in_place'
+end
+
+gem 'heroku'
+group :production do
+  # To be used in heroku
+  gem 'pg', '0.12.2'
 end
 
 gem 'jquery-rails'
