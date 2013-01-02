@@ -13,21 +13,6 @@
 
 ActiveRecord::Schema.define(:version => 20121229202642) do
 
-  create_table "accesses", :force => true do |t|
-    t.integer  "type"
-    t.boolean  "write"
-    t.boolean  "create"
-    t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  create_table "bibles", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "permissions", :force => true do |t|
     t.integer  "category"
     t.boolean  "can_write",  :default => false, :null => false
