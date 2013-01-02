@@ -32,7 +32,7 @@ group :assets do
   gem 'best_in_place'
 end
 
-gem 'heroku'
+#gem 'heroku'
 group :production do
   # To be used in heroku
   gem 'pg', '0.12.2'
