@@ -25,15 +25,7 @@ group :assets do
   # UI from Twitter Bootstrap
   gem 'bootstrap-sass', '~> 2.2.2.0'
 
-  # Secure password
-  gem 'bcrypt-ruby', '3.0.1'
 
-  # In place edit
-  gem 'best_in_place'
-
-  # Storage
-  gem 'paperclip'
-  gem 'aws-sdk'
 end
 
 #gem 'heroku'
@@ -45,7 +37,15 @@ end
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
+# Secure password
+gem 'bcrypt-ruby', '3.0.1'
+
+# In place edit
+gem 'best_in_place'
+
+# Storage
+gem 'paperclip'
+gem 'aws-sdk'
 
 # To use Jbuilder templates for JSON
 # gem 'jbuilder'
