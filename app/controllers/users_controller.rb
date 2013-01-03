@@ -33,7 +33,7 @@ class UsersController < ApplicationController
 
     # Previously Taken Classes
     #@prev_classes = SsClassSession.joins(:users).group(:class_id).where("\"users\".\"id\" = #{@user.id}")
-    @prev_classes = SsClassSession.joins(:users).group("COUNT(ss_class_session.class_id)").where("\"users\".\"id\" = #{@user.id}")
+    @prev_classes = SsClassSession.joins(:users).group("COUNT(ss_class_sessions.class_id)").where("\"users\".\"id\" = #{@user.id}")
     @prev_classes_count = @prev_classes.count
 
     respond_to do |format|
