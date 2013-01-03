@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     if request.xhr?
-      @users = User.order("name_first ASC").where("name_first like ? OR name_last like ?", "%#{params[:q]}%", "%#{params[:q]}%")
+      @users = User.order("name_first ASC").where("LOWER(name_first) like ? OR LOWER(name_last) like ?", "%#{params[:q]}%", "%#{params[:q]}%")
 
       results = @users.map(&:attributes)
       results = @users.map{|u| {:name => [u.name_first, u.name_last].join(' '), :id => u.id}}
