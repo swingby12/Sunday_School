@@ -1,0 +1,24 @@
+
+<a href="#" id="permission_write_<%= @permission.id %>" data-type="select"><%= @permission.can_write ? "True" : "False" %></a>
+<script>
+  $('#permission_write_<%= @permission.id %>').editable({
+    url: '/permissions/<%= @permission.id %>',
+    resource: 'permission',
+    name: 'can_write',
+    value: '<%= @permission.can_write ? "true" : "false" %>',
+    source: [
+      {value: 'true', text: 'True'},
+      {value: 'false', text: 'False'}
+    ],
+    display: function(value, sourceData) {
+      var colors = {'true': "green", 'false': "red"},
+          elem = $.grep(sourceData, function(o){return o.value == value;});
+
+      if(elem.length) {
+        $(this).text(elem[0].text).css("color", colors[value]);
+      } else {
+        $(this).empty();
+      }
+    }
+  });
+</script>

@@ -1,0 +1,15 @@
+
+<a href="#" id="permission_category_<%= @permission.id %>" data-type="select"><%= permission_list[@permission.category] %></a>
+<script>
+  $('#permission_category_<%= @permission.id %>').editable({
+    url: '/permissions/<%= @permission.id %>',
+    resource: 'permission',
+    name: 'category',
+    value: '<%= permission_list[@permission.category] %>',
+    source: [
+      <% permission_list.each_with_index { |book, index|  %>
+      {value: <%= index %>, text: '<%= book %>'}<%= (index < permission_list.length-1) ? "," : "" %>
+      <% } %>
+    ]
+  });
+</script>
