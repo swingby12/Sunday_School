@@ -22,6 +22,7 @@
   </tbody>
 </table>
 
+<% if @user.ss_classes.length > 0 %>
 <h4>Previously Taught Classes</h4>
 <table class="table table-bordered table-striped">
   <thead>
@@ -41,7 +42,9 @@
   <% end %>
   </tbody>
 </table>
+<% end %>
 
+<% if @user.permissions.length > 0 %>
 <h4>User Permissions</h4>
 <table class="table table-bordered table-striped">
   <thead>
@@ -61,6 +64,7 @@
   <% end %>
   </tbody>
 </table>
+<% end %>
 
 <div class="form-actions">
   <%= link_to 'Update account',
