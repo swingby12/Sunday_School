@@ -50,18 +50,18 @@ class SsClassesController < ApplicationController
   def create
     @ss_class = SsClass.new(params[:ss_class])
 
-    unless user_permission[:ss][:write]
-      redirect_to ss_classes_path
-    end
-
-    respond_to do |format|
-      if @ss_class.save
-        format.html { redirect_to @ss_class, notice: 'Ss class was successfully created.' }
-        format.json { render json: @ss_class, status: :created, location: @ss_class }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @ss_class.errors, status: :unprocessable_entity }
+    if user_permission[:ss][:write]
+      respond_to do |format|
+        if @ss_class.save
+          format.html { redirect_to @ss_class, notice: 'Ss class was successfully created.' }
+          format.json { render json: @ss_class, status: :created, location: @ss_class }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @ss_class.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to ss_classes_path
     end
   end
 
@@ -70,18 +70,21 @@ class SsClassesController < ApplicationController
   def update
     @ss_class = SsClass.find(params[:id])
 
-    unless user_permission[:ss][:write]
-      redirect_to @ss_class
-    end
-
-    respond_to do |format|
-      if @ss_class.update_attributes(params[:ss_class])
-        format.json { head :no_content }
-      else
-        #format.json { render json: @ss_class.errors, status: :unprocessable_entity }
-        format.json {render json: flash}
+    if user_permission[:ss][:write]
+      respond_to do |format|
+        if @ss_class.update_attributes(params[:ss_class])
+          format.json { head :no_content }
+        else
+          #format.json { render json: @ss_class.errors, status: :unprocessable_entity }
+          format.json {render json: flash}
+        end
+        format.html {redirect_to @ss_class, notice: 'Instructors Updated'}
       end
-      format.html {redirect_to @ss_class, notice: 'Instructors Updated'}
+    else
+      respond_to do |format|
+        format.html { redirect_to @ss_class }
+        format.json {head :no_content}
+      end
     end
   end
 
@@ -90,15 +93,15 @@ class SsClassesController < ApplicationController
   def destroy
     @ss_class = SsClass.find(params[:id])
 
-    unless user_permission[:ss][:write]
+    if user_permission[:ss][:write]
+      @ss_class.destroy
+
+      respond_to do |format|
+        format.html { redirect_to ss_classes_url }
+        format.json { head :no_content }
+      end
+    else
       redirect_to ss_classes_path
-    end
-
-    @ss_class.destroy
-
-    respond_to do |format|
-      format.html { redirect_to ss_classes_url }
-      format.json { head :no_content }
     end
   end
 
@@ -152,7 +155,7 @@ class SsClassesController < ApplicationController
         end
       end
     end
-    return false
+    false
   end
 end
 

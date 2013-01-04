@@ -1,0 +1,18 @@
+<% if user_permission[:ss][:write] %>
+  <a href="#" id="ss_class_book" data-type="select"><%= bible_list[@ss_class.bible_id] %></a>
+  <script>
+    $('#ss_class_book').editable({
+      url: '/ss_classes/<%= @ss_class.id %>',
+      resource: 'ss_class',
+      name: 'bible_id',
+      value: <%= @ss_class.bible_id %>,
+      source: [
+        <% bible_list.each_with_index { |book, index|  %>
+          {value: <%= index %>, text: '<%= book %>'}<%= (index < bible_list.length-1) ? "," : "" %>
+        <% } %>
+      ]
+    });
+  </script>
+<% else %>
+  <%= bible_list[@ss_class.bible_id] %>
+<% end %>

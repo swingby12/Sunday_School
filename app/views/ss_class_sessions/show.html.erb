@@ -4,16 +4,12 @@
       <legend><%= @ss_class.name %> <small><%= @ss_class.year %> - Q<%= @ss_class.quarter %></small></legend>
     <p>
       <b>Class Date:</b>
-      <%= best_in_place @ss_class_session, :date %>
+      <%= render :partial => 'ss_classes/editable/session_date' %>
     </p>
 
     <p>
       <b>Instructor:</b>
-      <%= best_in_place @ss_class_session,
-                        :instructor_id,
-                        :type => :select,
-                        :collection => @instructors.collect { |u| [u.id, u.name] }
-      %>
+      <%= render :partial => 'ss_classes/editable/session_instructor' %>
     </p>
 
 

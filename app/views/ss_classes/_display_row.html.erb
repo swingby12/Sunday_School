@@ -1,6 +1,6 @@
 <tr id="session_row_<%= @ss_class_session.id %>">
-  <td><%= view_session_date %></td>
-  <td><%= view_session_instructor %></td>
+  <td><%= render :partial => 'ss_classes/editable/session_date' %></td>
+  <td><%= render :partial => 'ss_classes/editable/session_instructor' %></td>
   <td>
     <% @ss_class_session.ss_class_session_notes.each do |note| %>
         <%= link_to note.file_file_name,

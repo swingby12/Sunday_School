@@ -1,0 +1,18 @@
+<% if user_permission[:ss][:write] or is_instructor? %>
+  <a href="#" id="ss_class_session_instructor<%= @ss_class_session.id %>" data-type="select"><%= @ss_class_session.instructor.name %></a>
+  <script>
+    $('#ss_class_session_instructor<%= @ss_class_session.id %>').editable({
+      url: '/ss_class_sessions/<%= @ss_class_session.id %>',
+      resource: 'ss_class_session',
+      name: 'instructor_id',
+      value: <%= @ss_class_session.instructor_id %>,
+      source: [
+        <% @instructors.each do |instructor| %>
+        {value: <%= instructor.id %>, text: '<%= instructor.name %>'}<%= (instructor == @instructors.last) ? "" : "," %>
+        <% end %>
+      ]
+    });
+  </script>
+<% else %>
+  <%= @ss_class_session.instructor.name %>
+<% end %>

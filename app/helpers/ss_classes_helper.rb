@@ -71,7 +71,7 @@ module SsClassesHelper
   def parse_instructors(instructors)
     list_of_instructor = []
     instructors.each do |instructor|
-      list_of_instructor.push( link_to instructor.name, instructor)
+      list_of_instructor.push( instructor.name )
     end
     output_str = ""
     list_of_instructor.each do |inst|

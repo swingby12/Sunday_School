@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require best_in_place
 //= require bootstrap
+//= require bootstrap-editable-inline
+//= require bootstrap-editable-rails
 //= require_tree .
 
 function flash_display(type, str)

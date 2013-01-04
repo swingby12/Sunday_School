@@ -1,0 +1,19 @@
+<% if user_permission[:ss][:write] %>
+  <a href="#" id="ss_class_quarter" data-type="select">Q<%= @ss_class.quarter %></a>
+  <script>
+    $('#ss_class_quarter').editable({
+      url: '/ss_classes/<%= @ss_class.id %>',
+      resource: 'ss_class',
+      name: 'quarter',
+      value: <%= @ss_class.quarter %>,
+      source: [
+        {value: 1, text: 'Q1'},
+        {value: 2, text: 'Q2'},
+        {value: 3, text: 'Q3'},
+        {value: 4, text: 'Q4'}
+      ]
+    });
+  </script>
+<% else %>
+  Q<%= @ss_class.quarter %>
+<% end %>

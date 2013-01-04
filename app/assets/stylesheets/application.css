@@ -11,6 +11,9 @@
  *= require_self
  *= require_tree .
 */
+
+@import "bootstrap-editable.css" ;
+
 .footer {
     margin-top: 20px;
     padding: 10px 0 0 0;

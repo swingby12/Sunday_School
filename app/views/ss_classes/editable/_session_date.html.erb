@@ -1,0 +1,22 @@
+<% if user_permission[:ss][:write] or is_instructor? %>
+  <a href="#" id="ss_class_session_date<%= @ss_class_session.id %>" data-type="date"><%= @ss_class_session.date %></a>
+  <script>
+    $('#ss_class_session_date<%= @ss_class_session.id %>').editable({
+      url: '/ss_class_sessions/<%= @ss_class_session.id %>',
+      resource: 'ss_class_session',
+      name: 'date',
+      format: 'yyyy-mm-dd',
+      viewformat: 'yyyy-mm-dd',
+      datepicker: {
+        weekStart: 1
+      },
+      validate: function(value) {
+        if(!value) {
+          return 'Need to enter date';
+        }
+      }
+    });
+  </script>
+<% else %>
+  <%= @ss_class_session.date %>
+<% end %>

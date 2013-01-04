@@ -1,6 +1,6 @@
-<h2><%= view_name %> <small><%= view_year %> - <%= view_quarter %></small></h2>
+<h2><%= render :partial => "ss_classes/editable/name" %><small><%= render :partial => "ss_classes/editable/year" %> - <%= render :partial => "ss_classes/editable/quarter" %></small></h2>
 <p>
-  <b>Book:</b> <%= view_book %> <br>
+  <b>Book:</b> <%= render :partial => "ss_classes/editable/book" %> <br>
   <strong>Instructors: </strong>
   <% if user_permission[:ss][:write] %>
     <div class="span8">

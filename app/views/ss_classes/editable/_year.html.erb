@@ -1,0 +1,13 @@
+<% if user_permission[:ss][:write] %>
+  <a href="#" id="ss_class_year" data-type="text"><%= @ss_class.year %></a>
+  <script>
+    $('#ss_class_year').editable({
+      url: '/ss_classes/<%= @ss_class.id %>',
+      resource: 'ss_class',
+      name: 'year',
+      title: 'Enter year'
+    });
+  </script>
+<% else %>
+  <%= @ss_class.year %>
+<% end %>
