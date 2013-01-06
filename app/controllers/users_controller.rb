@@ -56,6 +56,11 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+
+    unless user_permission[:admin][:write] or (current_user.id == @user.id)
+      not_found
+    end
+
     respond_to do |format|
       format.html{ render "_form"}
     end
@@ -79,7 +84,7 @@ class UsersController < ApplicationController
           @admin_per.save
         end
         sign_in @user
-        flash[:success] = "Welcome Back"
+        #flash[:success] = "Welcome Back"
         format.html { redirect_to @user, notice: 'User was successfully created.' }
         format.json { render json: @user, status: :created, location: @user }
       else
@@ -94,18 +99,19 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
 
-    unless user_permission[:admin][:read] or (current_user.id == @user.id)
+    unless user_permission[:admin][:write] or (current_user.id == @user.id)
       not_found
     end
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        sign_in @user
+        #sign_in @user
         format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { head :no_content }
+        #format.json { head :no_content }
       else
+        #format.html { redirect_to @user, notice: 'User was unsuccessfully updated.' }
         format.html { render action: "edit" }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        #format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -124,4 +130,5 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 end
