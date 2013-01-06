@@ -25,7 +25,7 @@ function flash_display(type, str)
 }
 
 $(function () {
-    $('#ss_class_instructor_tokens').tokenInput('/users.json', {
+    $('#ss_class_instructor_tokens').tokenInput('/users/search.json', {
         crossDomain: false,
         prePopulate: $('#ss_class_instructor_tokens').data('pre'),
         theme: 'facebook'
@@ -33,7 +33,7 @@ $(function () {
 });
 
 $(function () {
-    $('#ss_class_session_attendance_tokens').tokenInput('/users.json', {
+    $('#ss_class_session_attendance_tokens').tokenInput('/users/search.json', {
         crossDomain: false,
         prePopulate: $('#ss_class_session_attendance_tokens').data('pre'),
         theme: 'facebook'

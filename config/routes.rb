@@ -12,6 +12,7 @@ SundaySchool::Application.routes.draw do
 
   resources :accesses
 
+  match 'users/search' => 'users#search'
   resources :users
 
   resources :sessions, only: [:new, :create, :destroy]
@@ -22,6 +23,7 @@ SundaySchool::Application.routes.draw do
 
   match 'ss_classes/new_session/:id' => 'ss_classes#new_session'
   match 'ss_classes/:id/attendance' => 'ss_classes#attendance'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -3,23 +3,12 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    if request.xhr?
-      @users = User.order("name_first ASC").where("LOWER(name_first) like ? OR LOWER(name_last) like ?", "%#{params[:q]}%", "%#{params[:q]}%")
-
-      results = @users.map(&:attributes)
-      results = @users.map{|u| {:name => [u.name_first, u.name_last].join(' '), :id => u.id}}
-      #results = results.map(&:attributes)
-      respond_to do |format|
-        format.json { render :json => results  }
-      end
-    else
-      unless user_permission[:admin][:read]
-        not_found
-      end
-      @users = User.order("name_first ASC").all
-      respond_to do |format|
-        format.html # index.html.erb
-      end
+    unless user_permission[:admin][:read]
+      not_found
+    end
+    @users = User.order("name_first ASC").all
+    respond_to do |format|
+      format.html # index.html.erb
     end
   end
 
@@ -128,6 +117,19 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.html { redirect_to users_url }
       format.json { head :no_content }
+    end
+  end
+
+  # GET /users/search
+  # GET /users/search.json
+  def search
+    @users = User.search_name(params[:q])
+
+    results = @users.map(&:attributes)
+    results = @users.map{|u| {:name => [u.name_first, u.name_last].join(' '), :id => u.id}}
+    #results = results.map(&:attributes)
+    respond_to do |format|
+      format.json { render :json => results  }
     end
   end
 

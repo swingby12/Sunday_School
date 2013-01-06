@@ -55,4 +55,8 @@ class User < ActiveRecord::Base
     self.remember_token = SecureRandom.urlsafe_base64
   end
 
+  def self.search_name(keyword)
+    order("name_first ASC").where("LOWER(name_first) like ? OR LOWER(name_last) like ?", "%#{keyword}%", "%#{keyword}%")
+  end
+
 end
