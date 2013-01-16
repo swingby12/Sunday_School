@@ -52,7 +52,11 @@ class SsClassSessionsController < ApplicationController
     @success = @ss_class_session.save
 
     respond_to do |format|
-      format.js
+      if @success
+        format.json { render :json => @ss_class_session }
+      else
+        format.json { render :json => @ss_class_session.errors, status: :unprocessable_entity }
+      end
     end
   end
 

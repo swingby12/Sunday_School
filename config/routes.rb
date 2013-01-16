@@ -8,6 +8,7 @@ SundaySchool::Application.routes.draw do
 
   resources :ss_class_sessions
 
+  match 'ss_classes/:id/instructors' => 'ss_classes#instructors'
   resources :ss_classes
 
   resources :accesses

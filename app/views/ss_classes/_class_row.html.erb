@@ -1,14 +1,93 @@
-<!--- TODO: Change to  x-editable --->
-<tr id="new-session-form" class="">
-  <% @ss_class = SsClass.find(params[:id]) %>
-  <%= form_for(SsClassSession.new, :remote => true) do |f| %>
-      <%= f.hidden_field :class_id, :value => @ss_class.id %>
-      <td class="span3"><%= f.text_field :date %></td>
-      <td class="span3"><%= f.select  :instructor_id,
-                                      @ss_class.instructors.collect { |u| [u.name, u.id] }%>
-      </td>
-      <td></td>
-      <td></td>
-      <td><%= f.submit "Add", :class => "btn btn-primary" %></td>
-  <% end %>
+<tr id="new-session-form">
+  <td>
+    <%= link_to "",
+                "#",
+                :class => "myeditable editable editable-click editable-empty",
+                :data => {
+                    :type => "date",
+                    :name => "ss_class_session[date]",
+                    :viewformat => "yyyy-mm-dd"
+                },
+                :id => "new_session_date"
+    %>
+  </td>
+  <td>
+    <%= link_to "",
+                "#",
+                :class => "myeditable editable editable-click editable-empty",
+                :data => {
+                    :type => "select",
+                    :name => "ss_class_session[instructor_id]",
+                    :source => "/ss_classes/#{@ss_class.id}/instructors"
+                },
+                :id => "new_session_instructor"
+    %>
+  <td>
+    <%= link_to "",
+                "#",
+                :class => "myeditable",
+                :data => {
+                    :type => "text",
+                    :name => "ss_class_session[class_id]",
+                    :value => @ss_class.id
+                },
+                :style => "display: none"
+    %>
+  </td>
+  <td></td>
+  <td>
+    <button id="save-btn" class="btn btn-primary">Add new session!</button>
+    <div id="msg" class="alert hide"></div>
+  </td>
 </tr>
+<script>
+  //init editables
+  $('.myeditable').editable({
+    url: function(params) {},
+    placement: 'right',
+    validate: function(value) {
+      if (value == '') {
+        flash_display("error", "This field is required");
+      }
+    }
+  });
+
+  $('#new_session_date').editable('option', 'validate', function(v) {
+    if(!v) return 'Require session date!';
+  });
+  $('#new_session_instructor').editable('option', 'validate', function(v) {
+    if(!v) return 'Require instructor!';
+  });
+
+  $('#save-btn').click(function() {
+    $('.myeditable').editable('submit', {
+      url: '/ss_class_sessions',
+      ajaxOptions: {
+        type: 'post',
+        dataType: 'json' //assuming json response
+      },
+      success: function(response, data) {
+        if(!response.success) {
+          flash_display("success", "New class added");
+          $("#new-session-form").html(data.date);
+          window.location.reload()
+        }
+      },
+      error: function(errors) {
+        if(errors && errors.responseText) { //ajax error, errors = xhr object
+          var obj = jQuery.parseJSON(errors.responseText);
+
+          var str = '<strong>Error Message:</strong><br>';
+          for( key in obj ) {
+            str +=  "key is " + [ key ] + ", value is " + obj[ key ] ;
+          }
+          flash_display("error", str);
+        } else { //validation error (client-side or server-side)
+          var msg = '<strong>Error Message:</strong><br>';
+          $.each(errors, function(k, v) { msg += v+"<br>"; });
+          flash_display("error", msg);
+        }
+      }
+    });
+  });
+</script>

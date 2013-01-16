@@ -157,5 +157,16 @@ class SsClassesController < ApplicationController
     end
     false
   end
+
+  def instructors
+    @ss_class = SsClass.find(params[:id])
+    @instructors = @ss_class.instructors
+
+    results = @instructors.map{|u| {u.id => [u.name_first, u.name_last].join(' ')}}
+    #results = results.map(&:attributes)
+    respond_to do |format|
+      format.json { render :json => results  }
+    end
+  end
 end
 

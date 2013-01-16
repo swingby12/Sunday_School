@@ -9,12 +9,12 @@ class SsClassSessionNote < ActiveRecord::Base
             :presence => true
   validates_attachment :file,
                        :presence => true
-  validates_attachment_content_type :file,
-                                    :content_type => [
-                                        'application/pdf',
-                                        'application/msword',
-                                        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-                                    ]
+  #validates_attachment_content_type :file,
+  #                                  :content_type => [
+  #                                      'application/pdf',
+  #                                      'application/msword',
+  #                                      'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+  #                                  ]
   validates_attachment_size :file,
                             :less_than => 10.megabytes
 
